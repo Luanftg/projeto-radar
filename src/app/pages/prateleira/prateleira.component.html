@@ -1,0 +1,131 @@
+<div cdkDropListGroup class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3">
+          <h3 class="text-center">Estoque</h3>
+          <hr>
+          <div class="campanha-estoque text-center">
+            <div cdkDropList #estoquelista="cdkDropList" [cdkDropListData]="estoque"
+              [cdkDropListConnectedTo]="[list1, list2, list3, list4, list5, list6, list7, list8, list9, list10, list11, list12]"
+              (cdkDropListDropped)="drop($event)" id="estoquelist">
+              <div class="estoque-lista"
+                *ngFor="let item of estoque" cdkDrag
+                getSortedItems>{{item}}</div>
+            </div>
+          </div>
+          <div class="paginacao">
+            <!--inclindo o controle de paginação.-->
+            <!-- <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="<" nextLabel=">"></pagination-controls> -->
+          </div>
+        </div>
+        <div class="prateleira col-md-6">
+          <div class="text-center">
+            <h3>Prateleira</h3>
+            <hr>
+          </div>
+          <div>
+            <div class="prateleira-nichos">
+              <div class="row">
+                <div cdkDropList #list1="cdkDropList" [cdkDropListData]="prateleira11"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="estoque-lista" *ngFor="let item of prateleira11" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list2="cdkDropList" [cdkDropListData]="prateleira12"
+                  [cdkDropListConnectedTo]="[estoquelista, list1, list3, list4, list5, list6, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira12" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list3="cdkDropList" [cdkDropListData]="prateleira13"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list1, list4, list5, list6, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira13" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list4="cdkDropList" [cdkDropListData]="prateleira14"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list1, list5, list6, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira14" cdkDrag>{{item}}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div cdkDropList #list5="cdkDropList" [cdkDropListData]="prateleira21"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list1, list6, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira21" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list6="cdkDropList" [cdkDropListData]="prateleira22"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list1, list7, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira22" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list7="cdkDropList" [cdkDropListData]="prateleira23"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list1, list8, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira23" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list8="cdkDropList" [cdkDropListData]="prateleira24"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list1, list9, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira24" cdkDrag>{{item}}</div>
+                </div>
+              </div>
+              <div class="row">
+                <div cdkDropList #list9="cdkDropList" [cdkDropListData]="prateleira31"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list8, list1, list10, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira31" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list10="cdkDropList" [cdkDropListData]="prateleira32"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list8, list9, list1, list11, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira32" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list11="cdkDropList" [cdkDropListData]="prateleira33"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list8, list9, list10, list1, list12]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira33" cdkDrag>{{item}}</div>
+                </div>
+                <div cdkDropList #list12="cdkDropList" [cdkDropListData]="prateleira34"
+                  [cdkDropListConnectedTo]="[estoquelista, list2, list3, list4, list5, list6, list7, list8, list9, list10, list11, list1]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)">
+                  <div class="prateleira-list" *ngFor="let item of prateleira34" cdkDrag>{{item}}</div>
+                </div>
+              </div>
+              <div class="btnSalvar row justify-content-end">
+                <button class="btn btn-success btn-lg">Salvar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓDIGO ORIGINAL DO GUILHERME -->
+<!-- <div class="table">
+  <div class="board">
+    <div class="col">
+      <h2>Tabela 1</h2>
+      <div *ngFor="let i of colunas1">
+        <div id={{i.toString()}} cdkDropList class="lesson-list" [cdkDropListData]="lessons1[i]"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let lesson of lessons1[i]" class="lesson" [cdkDragData]="lesson" cdkDrag>
+            {{lesson.description}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h2>Tabela 2</h2>
+      <div *ngFor="let i of colunas2">
+        <div id={{i.toString()}} cdkDropList class="lesson-list" [cdkDropListData]="lessons2[i]"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let lesson of lessons2[i]" class="lesson" [cdkDragData]="lesson" cdkDrag>
+            {{lesson.description}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- FIM DO CÓDIGO ORIGINAL DO GUILHERME -->
