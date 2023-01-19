@@ -20,7 +20,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { FluxoEstadoComponent } from './home/fluxo-estado/fluxo-estado.component';
 import { PipeEstadoPipe } from './clientes/pipe-estado.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { PrateleiraComponent } from './prateleira/prateleira.component';
 
 

@@ -1,104 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
+// Interface para Medicamento
+export interface Medicamento {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-prateleira',
   templateUrl: './prateleira.component.html',
   styleUrls: ['./prateleira.component.css']
 })
+
 export class PrateleiraComponent implements OnInit {
 
-  constructor() { }
-
+  estoque!: Medicamento[];
   ngOnInit(): void {
   }
-  
-  estoque = estoqueLista();
-  prateleira11: string[] = [];
-  prateleira12: string[] = [];
-  prateleira13: string[] = [];
-  prateleira14: string[] = [];
-  prateleira21: string[] = [];
-  prateleira22: string[] = [];
-  prateleira23: string[] = [];
-  prateleira24: string[] = [];
-  prateleira31: string[] = [];
-  prateleira32: string[] = [];
-  prateleira33: string[] = [];
-  prateleira34: string[] = [];
-  prateleira41: string[] = [];
-  prateleira42: string[] = [];
-  prateleira43: string[] = [];
-  prateleira44: string[] = [];
-  paginaAtual: number = 1;
-  contador: number = 13;
+  prateleira11: Medicamento[] = [];
+  prateleira12: Medicamento[] = [];
+  prateleira13: Medicamento[] = [];
+  prateleira14: Medicamento[] = [];
+  prateleira15: Medicamento[] = [];
+  prateleira21: Medicamento[] = [];
+  prateleira22: Medicamento[] = [];
+  prateleira23: Medicamento[] = [];
+  prateleira24: Medicamento[] = [];
+  prateleira25: Medicamento[] = [];
+  prateleira31: Medicamento[] = [];
+  prateleira32: Medicamento[] = [];
+  prateleira33: Medicamento[] = [];
+  prateleira34: Medicamento[] = [];
+  prateleira35: Medicamento[] = [];
 
+  // Inicia a instância de getMedicamentos
+  constructor(private httpClient: HttpClient) {
+    this.getMedicamentos()
+  }
 
-  drop(event: CdkDragDrop<string[]>) {
+  // Função responsável por buscar a lista de medicamentos na URL do Environment, que aponta para a api.
+  getMedicamentos() {
+    this.httpClient.get<Medicamento[]>(environment.url + "medicamentos")
+      .subscribe(list => {
+        this.estoque = list;
+      })
+  }
+
+  // Função responsável pelo Drag and Drop
+  drop(event: CdkDragDrop<Medicamento[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (event.container.data.length<4){
+    } else  {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
+      console.log(
+        event.container.id, //id do container onde o item foi dropado
+        event.currentIndex, //Index da posição do item dentro do container
+        // event.item.element.nativeElement.id//Conteudo do item movido
+        event.item.element.nativeElement.getAttribute('item.id'),
+        
+        // event.previousContainer.data[event.previousIndex]['id]
+      )
     }
   }
 
-}
-
-function estoqueLista() {
-  var estoque = [];
-  for (let index = 1; index <= 50; index++) {
-    var listaMed = "Medicamento " + [index];
-    estoque.push(listaMed)
- }
- return estoque;
-}
-
-export class Campanha {
-  estoque = estoqueLista();
-  prateleira11: string[] = [];
-  prateleira12: string[] = [];
-  prateleira13: string[] = [];
-  prateleira14: string[] = [];
-  prateleira21: string[] = [];
-  prateleira22: string[] = [];
-  prateleira23: string[] = [];
-  prateleira24: string[] = [];
-  prateleira31: string[] = [];
-  prateleira32: string[] = [];
-  prateleira33: string[] = [];
-  prateleira34: string[] = [];
-  prateleira41: string[] = [];
-  prateleira42: string[] = [];
-  prateleira43: string[] = [];
-  prateleira44: string[] = [];
-
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if (event.container.data.length<4){
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    } else if (event.container.id != 'estoquelist'){
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
+  onDrop(event: CdkDragDrop<string[]>) {
+    console.log(event.item.data.id);
   }
 }
+
 //CSS DO CÓDIGO ORIGINAL DO GUILHERME
 /* 
 export class DragAndDropComponent {
