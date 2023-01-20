@@ -60,6 +60,7 @@
   background-image: url("../../../assets/img/oneshelf.png");
   background-size: 100%;
   background-repeat: no-repeat;
+  opacity: 80%;
 } 
  
 /* CSS responsável pelo conteúdo dos nichos da prateleira */
@@ -81,10 +82,11 @@
   margin-bottom: 4px;
   padding-top: 5px;
   padding-left: 20px;
-  border: solid 1px rgb(0, 0, 0);
+  /* border: solid 1px rgb(0, 0, 0); */
   justify-content: space-between;
   display:inline-flex;
   flex-wrap: wrap;
+  
 }
 
 /* CSS linhas de nichos */
