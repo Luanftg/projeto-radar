@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { IProduto } from 'src/app/shared/models/produto.interface';
+import { RequestService } from 'src/app/shared/request/request.service';
+import { take } from 'rxjs';
 
 // Interface para Medicamento
 export interface Medicamento {
@@ -23,26 +26,29 @@ var itemId:number;
 
 export class PrateleiraComponent implements OnInit {
 
-  estoque!: Medicamento[];
+  estoque!: IProduto[];
   ngOnInit(): void {
   }
-  prateleiras: Medicamento[][]=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+  prateleiras: IProduto[][]=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
   // Inicia a instância de getMedicamentos
-  constructor(private httpClient: HttpClient) {
-    this.getMedicamentos()
+  constructor(private httpClient: HttpClient,
+    private req:RequestService) {
+    this.getProdutos()
   }
 
   // Função responsável por buscar a lista de medicamentos na URL do Environment, que aponta para a api.
-  getMedicamentos() {
-    this.httpClient.get<Medicamento[]>(environment.url + "medicamentos")
+  getProdutos() {
+    this.req.getProduto()
+      .pipe(take(1))
       .subscribe(list => {
-        this.estoque = list;
+        this.estoque = <IProduto[]>list;
       })
+      console.log(this.estoque)
   }
 
   // Função responsável pelo Drag and Drop
-  drop(event: CdkDragDrop<Medicamento[]>) {
+  drop(event: CdkDragDrop<IProduto[]>) {
     containerId = Number(event.container.id )
     console.log(event.container.data)
     if (event.previousContainer === event.container) {
@@ -77,5 +83,9 @@ export class PrateleiraComponent implements OnInit {
       }
     }
     console.log(prateleira)
+  }
+
+  teste(item:any) {
+    return JSON.stringify(item)
   }
 }

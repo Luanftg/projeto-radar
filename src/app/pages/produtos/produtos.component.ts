@@ -31,7 +31,8 @@ export class ProdutosComponent implements OnInit {
     nome: [''],
     descricao: [''],
     valor: [0],
-    qtd_estoque: [0]
+    qtdEstoque: [0],
+    photoUrl: ['']
   }) as IProdutoForm
 
   @ViewChild('tabela') list?: ElementRef<HTMLDivElement>;

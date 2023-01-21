@@ -22,8 +22,8 @@
         <input type="number" class="form-control textbox" id="valor" formControlName="valor">
       </div>
       <div class="mb-3">
-        <label for="qtd_estoque" class="form-label">Estoque:</label>
-        <input type="number" class="form-control textbox" id="qtd_estoque" formControlName="qtd_estoque">
+        <label for="qtdEstoque" class="form-label">Estoque:</label>
+        <input type="number" class="form-control textbox" id="qtdEstoque" formControlName="QtdEstoque">
       </div>
       <button type="submit" (click)="cadastrarProduto()" class="btn botao">Cadastrar</button>
     </div>
@@ -41,7 +41,7 @@
           <tr *ngFor="let produto of listaProduto" class="produto">
               <td>{{produto.nome}} </td>
               <td>{{produto.valor | currency: 'BRL'}}</td>
-              <td>{{produto.qtd_estoque}}</td>
+              <td>{{produto.qtdEstoque}}</td>
               <button (click)="removeProduto(produto.id)"  *ngIf="auth.verificaAdm()">Remover</button>
           </tr>
       </tbody>
