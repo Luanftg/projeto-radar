@@ -64,9 +64,9 @@ export class PrateleiraComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);//id do container onde o item foi dropado
       indexContainer = event.currentIndex //Index da posição do item dentro do container
       itemId = Number(event.container.data[event.currentIndex]['id']) //ID do item movid
-      /* console.log(
+      console.log(
         "ID do Container: " + containerId + ", Index do Container: " + indexContainer + ", ID do item: " + itemId
-      ) */
+      )
       if(containerId != 0) this.prateleira.push({containerId, indexContainer, itemId})
     } else  if((containerId!=0&&event.container.data.length<4)||containerId===0){
       transferArrayItem(
@@ -78,9 +78,9 @@ export class PrateleiraComponent implements OnInit {
       containerId = Number(event.container.id) //id do container onde o item foi dropado
       indexContainer = Number(event.currentIndex) //Index da posição do item dentro do container
       itemId = Number(event.container.data[event.currentIndex]['id']) //ID do item movid
-    /*   console.log(
+      console.log(
         "ID do Container: " + containerId + ", Index do Container: " + indexContainer + ", ID do item: " + itemId
-      ) */
+      )
       if(containerId != 0) {
         let existe=false;
         for (let i = 0; i < this.prateleira.length; i++) {
@@ -103,10 +103,5 @@ export class PrateleiraComponent implements OnInit {
   
   salvar() {
     console.log(this.prateleira)
-    console.log("ContainerID é do tipo " + typeof this.prateleira[0].containerId)
-    console.log("indexContainer é do tipo " + typeof this.prateleira[0].indexContainer)
-    console.log("itemId é do tipo " + typeof this.prateleira[0].itemId)
-
   }
- 
 }
