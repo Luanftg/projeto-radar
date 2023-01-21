@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 // Interface para Medicamento
 export interface Medicamento {
-  id: string;
+  id: number;
   name: string;
   image: string;
   description: string;
@@ -27,7 +27,6 @@ export class PrateleiraComponent implements OnInit {
   ngOnInit(): void {
   }
   prateleiras: Medicamento[][]=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-  prateleira:any[] = [];
 
   // Inicia a instância de getMedicamentos
   constructor(private httpClient: HttpClient) {
@@ -45,7 +44,7 @@ export class PrateleiraComponent implements OnInit {
   // Função responsável pelo Drag and Drop
   drop(event: CdkDragDrop<Medicamento[]>) {
     containerId = Number(event.container.id )
-    
+    console.log(event.container.data)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);//id do container onde o item foi dropado
       indexContainer = event.currentIndex //Index da posição do item dentro do container
@@ -60,21 +59,23 @@ export class PrateleiraComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
+      console.log(event.container)
     }
   }
   
   salvar() {
-    this.prateleira=[];
+    let prateleira=[];
     for (let i = 0; i < 15; i++) {
       const elementos = this.prateleiras[i];
       for (let j = 0; j < elementos.length; j++) {
-        const elemento = elementos[i];
+        const elemento = elementos[j];
         let containerId = i;
         let indexContainer = j;
-        let itemId = elemento.id;
-        this.prateleira.push({containerId, indexContainer, itemId})
+        let itemId = elemento["id"];
+        prateleira.push({containerId, indexContainer, itemId})
+        console.log(elemento)
       }
     }
-    console.log(this.prateleira)
+    console.log(prateleira)
   }
 }
