@@ -31,7 +31,7 @@
                 </div>
                 <div cdkDropList #list2="cdkDropList" [cdkDropListData]="prateleira12" class="campanha-prateleira"
                   (cdkDropListDropped)="drop($event)" id="lin1col2">
-                  <div class="prateleira-list" *ngFor="let item of prateleira12" cdkDrag><img [src]="item.image"
+                  <div class="prateleira-list" *ngFor="let item of prateleira12" cdkDrag [cdkDragData]="item.id"><img [src]="item.image"
                       class="img-med"></div>
                 </div>
                 <div cdkDropList #list3="cdkDropList" [cdkDropListData]="prateleira13" class="campanha-prateleira"

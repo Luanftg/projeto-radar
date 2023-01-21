@@ -55,6 +55,11 @@ export class PrateleiraComponent implements OnInit {
   drop(event: CdkDragDrop<Medicamento[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.log(
+        event.container.id, //id do container onde o item foi dropado
+        event.currentIndex, //Index da posição do item dentro do container
+        event.container.data[event.currentIndex]['id'] //ID do item movido
+      )
     } else  {
       transferArrayItem(
         event.previousContainer.data,
@@ -65,17 +70,14 @@ export class PrateleiraComponent implements OnInit {
       console.log(
         event.container.id, //id do container onde o item foi dropado
         event.currentIndex, //Index da posição do item dentro do container
-        // event.item.element.nativeElement.id//Conteudo do item movido
-        event.item.element.nativeElement.getAttribute('item.id'),
+        event.container.data[event.currentIndex]['id'] //ID do item movido
         
         // event.previousContainer.data[event.previousIndex]['id]
       )
     }
   }
 
-  onDrop(event: CdkDragDrop<string[]>) {
-    console.log(event.item.data.id);
-  }
+ 
 }
 
 //CSS DO CÓDIGO ORIGINAL DO GUILHERME
