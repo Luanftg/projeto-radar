@@ -11,6 +11,10 @@ export interface Medicamento {
   description: string;
 }
 
+var containerId:number | undefined;
+var indexContainer:number;
+var itemId:number;
+
 @Component({
   selector: 'app-prateleira',
   templateUrl: './prateleira.component.html',
@@ -37,6 +41,7 @@ export class PrateleiraComponent implements OnInit {
   prateleira33: Medicamento[] = [];
   prateleira34: Medicamento[] = [];
   prateleira35: Medicamento[] = [];
+  prateleira:any[] = [];
 
   // Inicia a instância de getMedicamentos
   constructor(private httpClient: HttpClient) {
@@ -53,149 +58,55 @@ export class PrateleiraComponent implements OnInit {
 
   // Função responsável pelo Drag and Drop
   drop(event: CdkDragDrop<Medicamento[]>) {
+    containerId = Number(event.container.id )
+    
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      console.log(
-        event.container.id, //id do container onde o item foi dropado
-        event.currentIndex, //Index da posição do item dentro do container
-        event.container.data[event.currentIndex]['id'] //ID do item movido
-      )
-    } else  {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);//id do container onde o item foi dropado
+      indexContainer = event.currentIndex //Index da posição do item dentro do container
+      itemId = Number(event.container.data[event.currentIndex]['id']) //ID do item movid
+      /* console.log(
+        "ID do Container: " + containerId + ", Index do Container: " + indexContainer + ", ID do item: " + itemId
+      ) */
+      if(containerId != 0) this.prateleira.push({containerId, indexContainer, itemId})
+    } else  if((containerId!=0&&event.container.data.length<4)||containerId===0){
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
-      console.log(
-        event.container.id, //id do container onde o item foi dropado
-        event.currentIndex, //Index da posição do item dentro do container
-        event.container.data[event.currentIndex]['id'] //ID do item movido
-        
-        // event.previousContainer.data[event.previousIndex]['id]
-      )
+      containerId = Number(event.container.id) //id do container onde o item foi dropado
+      indexContainer = Number(event.currentIndex) //Index da posição do item dentro do container
+      itemId = Number(event.container.data[event.currentIndex]['id']) //ID do item movid
+    /*   console.log(
+        "ID do Container: " + containerId + ", Index do Container: " + indexContainer + ", ID do item: " + itemId
+      ) */
+      if(containerId != 0) {
+        let existe=false;
+        for (let i = 0; i < this.prateleira.length; i++) {
+          if(this.prateleira[i]["itemId"]===itemId){
+            existe =true;
+            this.prateleira[i]={containerId, indexContainer, itemId};
+          }
+          
+        }
+        if(!existe) this.prateleira.push({ containerId, indexContainer, itemId})
+      }else{
+        for (let i = 0; i < this.prateleira.length; i++) {
+          if(this.prateleira[i]["itemId"]===itemId){
+            this.prateleira.splice(i,1);
+          }
+        }
+      }
     }
   }
+  
+  salvar() {
+    console.log(this.prateleira)
+    console.log("ContainerID é do tipo " + typeof this.prateleira[0].containerId)
+    console.log("indexContainer é do tipo " + typeof this.prateleira[0].indexContainer)
+    console.log("itemId é do tipo " + typeof this.prateleira[0].itemId)
 
+  }
  
 }
-
-//CSS DO CÓDIGO ORIGINAL DO GUILHERME
-/* 
-export class DragAndDropComponent {
-  lessons1 = [[
-    {
-      id: 120,
-      'description': 'Item 1',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    }, {
-      id: 122,
-      'description': 'Item 2',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    },
-  ], [
-    {
-      id: 122,
-      'description': 'Item 3',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    },],
-  [{
-    id: 123,
-    'description': 'Item 4',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },], [{
-    id: 124,
-    'description': 'Item 5',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },], [{
-    id: 125,
-    'description': 'Item 6',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },]]
-  lessons2 = [[
-    {
-      id: 120,
-      'description': 'Item 7',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    }, {
-      id: 122,
-      'description': 'Item 8',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    },
-  ], [
-    {
-      id: 122,
-      'description': 'Item 9',
-      'duration': '4.17',
-      'segNo': 1,
-      courseId: 11
-    },],
-  [{
-    id: 123,
-    'description': 'Item 10',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },], [{
-    id: 124,
-    'description': 'Item 11',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },], [{
-    id: 125,
-    'description': 'Item 12',
-    'duration': '4.17',
-    'segNo': 1,
-    courseId: 11
-  },]]
-    ;
-  colunas1 = [...Array(this.lessons1.length).keys()]//0,1,2,3
-  get1(val: number) {
-    if (val == 0) {
-      return 2;
-    }
-    return val - 1;
-  }
-  colunas2 = [...Array(this.lessons2.length).keys()]//0,1,2,3
-  get2(val: number) {
-    if (val == 0) {
-      return 2;
-    }
-    return val - 1;
-  }
-  drop(event: CdkDragDrop<ILesson[]>) {
-    console.log(event.previousContainer.id);
-    console.log(event.container.id);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-    }
-  }
-  newItems = ['Item 0', 'Item 1', 'Item 2', 'Item 3'];
-  activeItems = ['Item 4'];
-  doneItems = ['Item 5', 'Item 6', 'Item 7'];
-}
- */
