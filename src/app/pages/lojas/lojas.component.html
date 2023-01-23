@@ -1,42 +1,30 @@
 <body>
   <div class="container">
-    <div *ngIf="!auth.verificaAdm()" class="d-flex justify-content-center">
-      <div class="alert alert-warning text-center mt-4 w-25">
-        <p><strong>Você não tem permissão para cadastrar novos clientes.</strong></p>
-      </div>
-    </div>
-
     <div class="container-loja">
-      <div class="container" style="height: -webkit-fill-available;">
-        <div class="header">
-          <span>Lojas</span>
-          <button type="submit" (click)="CreateLoja()" id="new">Incluir</button>
-        </div>
-
-        <div class="divTable">
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Cidade</th>
-                <th>Estado</th>
-                <th class="acao">Ações</th>
-              </tr>
+          <div class="container" style="height: -webkit-fill-available;">
+            <div class="header">
+              <span>Lojas</span>
+              <button type="submit" (click)="CreateLoja()" id="new">Incluir</button>
+            </div>
+    
+            <div class="divTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th>nome</th>
+                    <th>cep</th>
+                    <th>Ação</th>
+                </tr>
             </thead>
             <tbody>
               <tr *ngFor="let loja of lojas">
                 <td>{{loja.nome}}</td>
-                <td>{{loja.telefone}}</td>
-                <td>{{loja.email}}</td>
-                <td>{{loja.cidade}}</td>
-                <td>{{loja.estado}}</td>
+                <td>{{loja.cep}}</td>
                 <td class="acao">
                   <button><i class='bx bx-show' (click)="ViewLoja(loja)"></i></button>
                   <button><i class='bx bx-edit' (click)="EditLoja(loja)"></i></button>
                   <button><i class='bx bx-trash' (click)="DeleteLoja(loja)"></i></button>
-                </td>
+               </td>
               </tr>
             </tbody>
           </table>

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { firstValueFrom } from 'rxjs';
-import { ICliente } from 'src/app/shared/models/cliente.interface';
-import { environment } from 'src/environments/environment';
+import { take } from 'rxjs';
+import { IClienteForm } from 'src/app/shared/models/cliente.interface';
+import { ClientesRequestService } from 'src/app/shared/request/clientes.service';
 
 @Component({
   selector: 'app-create-clientes-modal',
@@ -11,11 +11,55 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./create-clientes-modal.component.css']
 })
 export class CreateClientesModalComponent {
-
-  cadastros = 0
-
   constructor(
-    private http:HttpClient,
+    private fb: FormBuilder,
     public activeModal: NgbActiveModal,
+    public request:ClientesRequestService,
   ) { }
+  listaEstados = [
+    'Acre',
+    'Alagoas',
+    'Amapá',
+    'Amazonas',
+    'Bahia',
+    'Ceará',
+    'Distrito Federal',
+    'Espírito Santo',
+    'Goiás',
+    'Maranhão',
+    'Mato Grosso',
+    'Mato Grosso do Sul',
+    'Minas Gerais',
+    'Pará',
+    'Paraíba',
+    'Paraná',
+    'Pernambuco',
+    'Piauí',
+    'Rio de Janeiro',
+    'Rio Grande do Norte',
+    'Rio Grande do Sul',
+    'Rondônia',
+    'Roraima',
+    'Santa Catarina',
+    'São Paulo',
+    'Sergipe',
+    'Tocantins'
+]
+clienteForm :IClienteForm = this.fb.group({
+  id: [0],
+  nome: ['' , [Validators.required, Validators.minLength(3)]],
+  telefone: [''],
+  email: ['', [Validators.required, Validators.email]],
+  cpf: [''],
+  cep: [''],
+  logradouro:[''],
+  numero: [''],
+  bairro:[''],
+  cidade: [''],
+  estado: ['' , Validators.required],
+  complemento: ['']
+}) as IClienteForm
+create(){
+  this.request.postCliente(this.clienteForm.value)
+}
 }

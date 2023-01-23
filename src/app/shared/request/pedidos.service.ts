@@ -12,18 +12,19 @@ export class PedidosRequestService {
 
   constructor(private http: HttpClient) { }
 
-  updatePedido(pedido:any){
-    return this.http.put<any>(environment.url + 'pedidos/',pedido)
-  }
-
   getPedido(){
     let pedidos = this.http.get(environment.url + 'pedidos')
+    console.log('get no request pedido ', pedidos )
     return pedidos
   }
 
-  postPedido(pedido:any){
-    console.log('post no request ' + pedido )
+  postPedido(pedido:IPedido){
+    console.log(environment.url + 'pedidos/',pedido)
     return this.http.post<IPedido>(environment.url + 'pedidos/',pedido)
+  }
+
+  updatePedido(pedido:IPedido){
+    return this.http.put<any>(environment.url + 'pedidos/'+pedido.id,pedido)
   }
 
   deletePedido(id:number){

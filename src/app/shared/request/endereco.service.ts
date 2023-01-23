@@ -15,12 +15,12 @@ export class EnderecoRequestService {
     return enderecos
   }
   postEndereco(endereco:IEndereco){
-    console.log('post no request ' + endereco )
+    console.log(endereco )
     return this.http.post<IEndereco>(environment.url + 'enderecos/',endereco)
   }
 
   updateEndereco(endereco:IEndereco){
-    return this.http.put<IEndereco>(environment.url + 'enderecos/',endereco)
+    return this.http.put<IEndereco>(environment.url + 'enderecos/'+endereco.id,endereco)
   }
 
   deleteEndereco(id:number){

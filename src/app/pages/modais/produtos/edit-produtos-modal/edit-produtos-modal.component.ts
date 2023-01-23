@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs';
-import { IProduto, IProdutoForm } from 'src/app/shared/models/produto.interface';
+import { IProdutoForm } from 'src/app/shared/models/produto.interface';
 import { ProdutosRequestService } from 'src/app/shared/request/produtos.service';
 
 @Component({

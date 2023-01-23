@@ -1,16 +1,15 @@
 import { AuthService } from './../../shared/auth/auth.service';
-import { ILojas } from 'src/app/shared/models/lojas.interface';
-import { LojaRequestService } from 'src/app/shared/request/lojas.service';
-import { FormBuilder } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { ILoja, ILojaForm } from 'src/app/shared/models/loja.interface';
+import { LojasRequestService } from 'src/app/shared/request/lojas.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { take } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewLojasModalComponent } from '../modais/lojas/view-lojas-modal/view-lojas-modal.component';
 import { CreateLojasModalComponent } from '../modais/lojas/create-lojas-modal/create-lojas-modal.component';
 import { EditLojasModalComponent } from '../modais/lojas/edit-lojas-modal/edit-lojas-modal.component';
 import { DeleteLojasModalComponent } from '../modais/lojas/delete-lojas-modal/delete-lojas-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-lojas',
@@ -22,7 +21,7 @@ export class LojasComponent implements OnInit {
  
   constructor(
     private fb: FormBuilder,
-    private request: LojaRequestService,
+    private request: LojasRequestService,
     private modalService: NgbModal,
     public auth: AuthService) {
 
@@ -32,18 +31,18 @@ export class LojasComponent implements OnInit {
     this.getLojas()
   }
   
-  public lojas:ILojas[] = []
+  public lojas:ILoja[] = []
 
    getLojas() {
-    this.request.getLoja()
+/*     this.request.getLoja()
       .pipe(take(1))
       .subscribe(list => {
         this.lojas = <ILojas[]>list;
-      });
+      }); */
   }
 
   ViewLoja(loja: ILoja){
-    let lojaForm = this.fb.group({
+/*     let lojaForm = this.fb.group({
       id: [loja.id],
       nome: [loja.nome],
       telefone: [loja.telefone],
@@ -58,15 +57,15 @@ export class LojasComponent implements OnInit {
       complemento: [loja.complemento],
     }) as ILojaForm
     const modalRef = this.modalService.open(ViewLojasModalComponent);
-    modalRef.componentInstance.lojaForm = lojaForm;
+    modalRef.componentInstance.lojaForm = lojaForm; */
   }
 
   CreateLoja(){
-    this.modalService.open(CreateLojasModalComponent);
+    // this.modalService.open(CreateLojasModalComponent);
   }
 
   EditLoja(loja: ILoja){
-    let lojaForm = this.fb.group({
+  /*   let lojaForm = this.fb.group({
       id: [loja.id],
       nome: [loja.nome],
       telefone: [loja.telefone],
@@ -81,7 +80,7 @@ export class LojasComponent implements OnInit {
       complemento: [loja.complemento],
     }) as ILojaForm
     const modalRef = this.modalService.open(EditLojasModalComponent);
-    modalRef.componentInstance.lojaForm = lojaForm;
+    modalRef.componentInstance.lojaForm = lojaForm; */
   }
   
   DeleteLoja(loja: ILoja){
@@ -89,6 +88,5 @@ export class LojasComponent implements OnInit {
     modalRef.componentInstance.loja = loja;
   }
 }
-
 
 

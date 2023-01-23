@@ -3,20 +3,25 @@ import { IPedidoProduto } from "../shared/models/pedido-produto.interface";
 import { HttpClient } from "@angular/common/http";
 import { IPedido } from "../shared/models/pedido.interface";
 import { IProduto } from "../shared/models/produto.interface";
+import { PedidosProdutosRequestService } from "../shared/request/pedidosprodutos.service";
 
 export class Carrinho{
+    static setCarrinho(pedido: IPedido, pedidosProdutos: IPedidoProduto[]) {
+        console.log("Set: ", pedido, pedidosProdutos)
+      Carrinho.carrinho=pedidosProdutos;
+      Carrinho.pedido=pedido;
+    }
 
-    private static carrinho: (IPedidoProduto)[]=[{"id":201,"pedido_id":2,"produto_id":1,"valor":10,"quantidade":2},
-    {"id":202,"pedido_id":2,"produto_id":2,"valor":10,"quantidade":2}];
-    private static id:number=0;
-    private static pedido: IPedido={"id":2,"cliente_id":3,"valor_total":40,"data":new Date((new Date()).getTime())};
+    private static carrinho: (IPedidoProduto)[]=[{"id":0,"pedidoId":2,"produtoId":1,"valor":10,"quantidade":2},
+    {"id":0,"pedidoId":2,"produtoId":2,"valor":10,"quantidade":2}];
+    private static pedido: IPedido={"id":0,"clienteId":3,"valorTotal":40,"dtCriacao":new Date((new Date()).getTime())};
     
     public static buscaTamanho():number{
         return Carrinho.carrinho.length;
     }
 
     public static setCliente_Id(id:number):void{
-        this.pedido.cliente_id=id;
+        Carrinho.pedido.clienteId=id;
     }
 
     public static listar():(IPedidoProduto)[]{
@@ -24,7 +29,7 @@ export class Carrinho{
     }
 
     public static setPedido(cliente_id:number){
-        Carrinho.pedido.cliente_id=cliente_id;
+        Carrinho.pedido.clienteId=cliente_id;
     }
 
     public static adicionaPedidoProduto(produto: IProduto):void{
@@ -35,10 +40,8 @@ export class Carrinho{
                 Carrinho.carrinho[existePedidoProduto].quantidade = Number(Carrinho.carrinho[existePedidoProduto].quantidade) + 1;
         }else{
             let pedidoProduto={} as IPedidoProduto;
-            Carrinho.id++;
             pedidoProduto.quantidade=1
-            pedidoProduto.id=Carrinho.id;
-            pedidoProduto.produto_id=produto.id;
+            pedidoProduto.produtoId=produto.id;
             pedidoProduto.valor=produto.valor;
             Carrinho.carrinho.push(pedidoProduto);
         }
@@ -47,7 +50,7 @@ export class Carrinho{
     public static verifica(produtoId : Number) : number{
         for (let i = 0; i < Carrinho.carrinho.length; i++) {
             const item = Carrinho.carrinho[i];
-            if(item.produto_id.toString() === produtoId.toString()){
+            if(item.produtoId.toString() === produtoId.toString()){
                  return i
             }
         }
@@ -55,8 +58,7 @@ export class Carrinho{
     }
 
     public static excluirProduto(id:number):void{
-        console.log(Carrinho.carrinho);
-        let item=Carrinho.carrinho.splice(id,1);
+        Carrinho.carrinho.splice(id,1);
         }
 
     public static getValor_Total():number{
@@ -64,25 +66,47 @@ export class Carrinho{
         Carrinho.carrinho.forEach(item=>{
             total+=item.quantidade*item.valor;
         })
-        return Carrinho.pedido.valor_total=total;
+        return Carrinho.pedido.valorTotal=total;
     }
 
     public static async salvar(http:HttpClient):Promise<void>{
         let request = new PedidosRequestService(http);
-        request.postPedido(this.pedido).subscribe();
-        let pedido = [] as IPedido[];
-        request.getPedido()
-        .subscribe( res => pedido = <IPedido[]>res);
-        let pedidoLast=pedido.pop();
-        this.carrinho.forEach(pedidoProduto => {
-            pedidoProduto.pedido_id=pedidoLast ? pedidoLast.id : 0;
-            request.postPedido(pedidoProduto).subscribe();
-        });
+        let pedidoProdutoRequest=new PedidosProdutosRequestService(http);
+        console.log("pedido",Carrinho.pedido)
+        if(Carrinho.pedido.id){
+            request.updatePedido(Carrinho.pedido).subscribe();
+            Carrinho.carrinho.forEach(pedidoProduto=>{
+                if(pedidoProduto.id>0){
+                    pedidoProdutoRequest.updatePedidoProduto(pedidoProduto).subscribe();
+                }else{
+                    pedidoProduto.pedidoId=Carrinho.pedido.id;
+                    pedidoProdutoRequest.postPedidoProduto(pedidoProduto).subscribe();
+                }
+            })
+            Carrinho.reset();
+        }else{
+            let pedidoPost: IPedido = {} as IPedido;
+            pedidoPost.dtCriacao=new Date((new Date()).getTime());
+            pedidoPost.valorTotal=Carrinho.getValor_Total();
+            pedidoPost.clienteId=Carrinho.pedido.clienteId;
+            request.postPedido(pedidoPost).subscribe(()=>{let pedido = [] as IPedido[];
+                request.getPedido()
+                .subscribe( res => {pedido = <IPedido[]>res
+                    let pedidoLast=pedido.pop();
+                    console.log("Carrinho",Carrinho.carrinho)
+                    Carrinho.carrinho.forEach(pedidoProduto => {
+                        pedidoProduto.pedidoId=pedidoLast ? pedidoLast.id : 0;
+                        pedidoProdutoRequest.postPedidoProduto(pedidoProduto).subscribe();
+                    });
+                    Carrinho.reset();
+                });});
+            
+        }
     }
 
     public static reset(){
-        while(this.carrinho.length>0){
-            this.carrinho.pop();
+        while(Carrinho.carrinho.length>0){
+            Carrinho.carrinho.pop();
         }
     }
 }

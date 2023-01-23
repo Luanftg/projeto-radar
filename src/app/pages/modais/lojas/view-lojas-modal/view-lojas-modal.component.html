@@ -1,1 +1,38 @@
-<p>view-lojas-modal works!</p>
+<div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Cadastrar Loja</h3>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        (click)="activeModal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="lojaForm">
+        <label for="nome">Nome</label>
+        <input id="nome" formControlName="nome" type="text" required />
+    
+        <label for="cep">Cep</label>
+        <input id="cep" formControlName="cep" type="number" required />
+        
+        <label for="logradouro">Lougradouro</label>
+        <input id="logradouro" formControlName="logradouro" type="text" required />
+    
+        <label for="numero">Número</label>
+        <input id="numero" formControlName="numero" type="number" required />
+        
+        <label for="bairro">Bairro</label>
+        <input id="bairro" formControlName="bairro" type="text" required />
+        
+        <label for="cidade">Cidade</label>
+        <input id="cidade" formControlName="cidade" type="text" required />
+        
+        <label for="estado">Estado</label>
+        <input id="estado" formControlName="estado" type="text" required />
+        
+        <label for="complemento">Complemento</label>
+        <input id="complemento" formControlName="complemento" type="text" required />
+    
+       </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.close()">Cancelar</button>
+    </div>
+</div>

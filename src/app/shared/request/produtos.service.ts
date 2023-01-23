@@ -22,7 +22,7 @@ export class ProdutosRequestService {
   }
 
   updateProduto(produto:IProduto){
-    return this.http.put<IProduto>(environment.url + 'produtos/'+ produto.id + "/", produto)
+    return this.http.put<IProduto>(environment.url + 'produtos/'+produto.id,produto)
   }
 
   deleteProduto(id:number){

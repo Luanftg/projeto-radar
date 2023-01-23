@@ -5,9 +5,6 @@ export interface ILojaForm extends FormGroup{
   controls: {
     id: AbstractControl,
     nome: AbstractControl,
-    telefone: AbstractControl,
-    email: AbstractControl,
-    cpf: AbstractControl,
     cep: AbstractControl,
     logradouro:AbstractControl,
     numero: AbstractControl,
@@ -21,9 +18,6 @@ export interface ILojaForm extends FormGroup{
  export interface ILoja {
   id: number,
   nome: string,
-  telefone: string,
-  email: string,
-  cpf: string,
   cep: string,
   logradouro:string,
   numero: string,

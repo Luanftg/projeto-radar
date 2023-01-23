@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +14,6 @@ export class CreateProdutosModalComponent {
   fotoCarregada!: string;
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     public activeModal: NgbActiveModal,
     public request: ProdutosRequestService
   ) { }

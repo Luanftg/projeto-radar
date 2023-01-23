@@ -6,7 +6,7 @@ import { ICampanha } from '../models/campanha.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class CampanhaRequestService {
+export class CampanhasRequestService {
 
   constructor( private http: HttpClient ) { }
 
@@ -20,7 +20,7 @@ export class CampanhaRequestService {
   }
 
   updateCampanha(campanha:ICampanha){
-    return this.http.put<ICampanha>(environment.url + 'campanhas/',campanha)
+    return this.http.put<ICampanha>(environment.url + 'campanhas/'+campanha.id,campanha)
   }
 
   deleteCampanha(id:number){

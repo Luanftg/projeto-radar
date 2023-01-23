@@ -1,0 +1,45 @@
+<br>
+<div *ngIf="!auth.verificaAdm()" class="d-flex justify-content-center">
+  <div class="alert alert-warning text-center mt-4 w-25">
+    <p><strong>Você não tem permissão para acessar o carrinho.</strong></p>
+  </div>
+</div>
+
+<div class="container-produto">
+ <div class="container">
+    <div class="header">
+      <span>Carrinho</span>
+      <button type="submit" (click)="comprar()" id="new">Comprar</button>
+    </div>
+
+    <div class="divTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Valor</th>
+            <th>Quantidade</th>
+            <th>Total</th>
+            <th class="acao">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedidoProduto of getCarrinho();index as i">
+            <td>{{this.getProduto(pedidoProduto.produtoId).nome}}</td>
+            <td>{{pedidoProduto.valor}}</td>
+            <td><button id="retirar" type="button" class="btn btn-danger" style="margin-left: 10px;"
+              (click)="Subtrair(i)">-</button>
+              {{pedidoProduto.quantidade}}
+              <button id="adicionar" type="button" class="btn btn-primary" style="margin-right: 10px;"
+                (click)="Adicionar(i)">+</button>
+            </td>
+            <td>{{pedidoProduto.valor*pedidoProduto.quantidade}}</td>
+            <td class="acao">
+              <button><i class='bx bx-trash' (click)="delete(i)"></i></button>
+           </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -4,10 +4,6 @@ export interface IEnderecoForm extends FormGroup{
   value: IEndereco;
   controls: {
     id: AbstractControl,
-    nome: AbstractControl,
-    telefone: AbstractControl,
-    email: AbstractControl,
-    cpf: AbstractControl,
     cep: AbstractControl,
     logradouro:AbstractControl,
     numero: AbstractControl,
@@ -20,10 +16,6 @@ export interface IEnderecoForm extends FormGroup{
 
  export interface IEndereco {
   id: number,
-  nome: string,
-  telefone: string,
-  email: string,
-  cpf: string,
   cep: string,
   logradouro:string,
   numero: string,

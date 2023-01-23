@@ -5,10 +5,59 @@
       (click)="activeModal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    <span>Editar Cliente</span>
+    <form [formGroup]="clienteForm" class="form">
+      <div class="inputs">
+        <div class="mb-3">
+          <label for="nome" class="form-label" >Nome:</label>
+          <input type="text" class="form-control textbox" id="nome" formControlName="nome">
+        </div>
+        <div class="mb-3">
+          <label for="telefone" class="form-label">Telefone:</label>
+          <input type="text" class="form-control textbox" id="telefone" formControlName="telefone">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control textbox" id="email" formControlName="email">
+        </div>
+        <div class="mb-3">
+          <label for="cpf" class="form-label">CPF:</label>
+          <input type="text" class="form-control textbox" id="cpf" formControlName="cpf">
+        </div>
+        <div class="mb-3">
+          <label for="cep" class="form-label">CEP:</label>
+          <input type="text" class="form-control textbox" id="cep" formControlName="cep">
+        </div>
+        <div class="mb-3">
+          <label for="logradouro" class="form-label">Logradouro:</label>
+          <input type="text" class="form-control textbox" id="logradouro" formControlName="logradouro">
+        </div>
+        <div class="mb-3">
+          <label for="numero" class="form-label">Número:</label>
+          <input type="text" class="form-control textbox" id="numero" formControlName="numero">
+        </div>
+        <div class="mb-3">
+          <label for="bairro" class="form-label">Bairro:</label>
+          <input type="text" class="form-control textbox" id="bairro" formControlName="bairro">
+        </div>
+        <div class="mb-3">
+          <label for="cidade" class="form-label">Cidade:</label>
+          <input type="text" class="form-control textbox" id="cidade" formControlName="cidade">
+        </div>
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado:</label>
+          <select name="estados" id="" formControlName="estado" class="form-select seleciona-estado">
+            <option [ngValue]="estadoSelect | pipeEstado" *ngFor="let estadoSelect of listaEstados; index as i">{{estadoSelect}}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="complemento" class="form-label">Complemento:</label>
+          <input type="string" class="form-control textbox" id="complemento" formControlName="complemento">
+        </div>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
-    <button type="button" class="btn btn-success" routerLink="/clientes" (click)="activeModal.dismiss()">Salvar</button>
+    <button type="button" class="btn btn-success" routerLink="/clientes" (click)="edit()">Editar</button>
   </div>
 </div>
