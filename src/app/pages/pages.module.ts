@@ -39,6 +39,7 @@ import { EditLojasModalComponent } from './modais/lojas/edit-lojas-modal/edit-lo
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PrateleiraComponent } from './prateleira/prateleira.component';
 import { CampanhasComponent } from './campanhas/campanhas.component';
+import { SavePrateleiraModalComponent } from './modais/prateleira/save-prateleira-modal.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { CampanhasComponent } from './campanhas/campanhas.component';
     EditLojasModalComponent,
     PrateleiraComponent,
     CampanhasComponent,
+    SavePrateleiraModalComponent,
   ],
   imports: [
     CommonModule,

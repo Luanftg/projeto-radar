@@ -1,6 +1,5 @@
-
 <body>
-  <div class="container">
+  <div class="container container-tabela">
     <div *ngIf="!auth.verificaAdm()" class="d-flex justify-content-center">
       <div class="alert alert-warning text-center mt-4 w-25">
         <p><strong>Você não tem permissão para cadastrar novos produtos.</strong></p>
@@ -8,7 +7,7 @@
     </div>
 
     <div class="container-produto">
-      <div class="container">
+      <div class="container" style="height: -webkit-fill-available;">
         <div class="header">
           <span>Produtos</span>
           <button type="submit" (click)="CreateProduto()" id="new">Incluir</button>
@@ -18,19 +17,19 @@
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
+                <th style="width:15%">Nome</th>
                 <th style="width:50%">Descrição</th>
-                <th>Valor</th>
-                <th>Estoque</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Estoque</th>
                 <th class="acao">Ações</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="teste">
               <tr *ngFor="let produto of produtos">
                 <td>{{produto.nome}}</td>
                 <td>{{produto.descricao}}</td>
                 <td>{{produto.valor | currency}}</td>
-                <td>{{produto.qtdEstoque}} un.</td>
+                <td class="text-center">{{produto.qtdEstoque}} un.</td>
                 <td class="acao">
                   <button><i class='bx bx-show' (click)="ViewProduto(produto)"></i></button>
                   <button><i class='bx bx-edit' (click)="EditProduto(produto)"></i></button>

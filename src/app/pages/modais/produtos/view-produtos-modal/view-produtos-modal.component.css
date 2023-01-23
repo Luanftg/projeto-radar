@@ -2,3 +2,9 @@
   width: 294px;
   height: 264px;
 }
+
+.textarea {
+  height: 164px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
