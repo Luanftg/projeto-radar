@@ -225,10 +225,13 @@ td button i:first-child {
   margin-right: 10px;
 }
 
-.container-campanhas{
+.container-campanha{
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
   padding: 0 1rem 0 1rem;
   height: inherit;
+}
+
+.include {
+  margin-left: 12px;
 }

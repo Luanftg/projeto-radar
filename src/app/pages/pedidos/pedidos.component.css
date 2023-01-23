@@ -9,7 +9,7 @@
 
 body {
   width: 100vw;
-  height: 100vh;
+  height: 94vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,6 @@ button {
 }
 
 .container {
-  width: 90%;
   height: 80%;
   border-radius: 10px;
   background: white;
@@ -99,7 +98,7 @@ tbody tr {
 }
 
 thead tr th.acao {
-  width: 100px!important;
+  width: 150px!important;
   text-align: center;
 }
 
@@ -224,4 +223,11 @@ td button i {
 
 td button i:first-child {
   margin-right: 10px;
+}
+
+.container-pedido{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 1rem 0 1rem;
+  height: inherit;
 }

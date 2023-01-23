@@ -1,34 +1,38 @@
-<body>
-<div class="container">
-  <div class="header">
-    <span>Listagem de Pedidos</span>
-  </div>
+  <body>
+    <div class="container">
+        <div class="container-pedido">
+        <div class="container"  style="height: -webkit-fill-available;">
+          <div class="header">
+          <span>Listagem de Pedidos</span>
+        </div>
 
-  <div class="divTable">
-    <table>
-        <thead>
-          <tr>
-            <th>cpf</th>
-            <th>nome</th>
-            <th>valor da compra</th>
-            <th>data</th>
-            <th>Ação</th>
-        </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pedido of pedidos">
-        <td>{{this.getClienteById(pedido.clienteId).cpf}}</td>
-        <td>{{this.getClienteById(pedido.clienteId).nome}}</td>
-        <td>{{pedido.valorTotal}}</td>
-        <td>{{pedido.dtCriacao}}</td>
-        <td class="acao">
-          <button><i class='bx bx-show' (click)="viewPedido(pedido)"></i></button>
-          <button><i class='bx bx-edit' routerLink="/carrinho" (click)="editPedido(pedido)"></i></button>
-          <button><i class='bx bx-trash' (click)="deletePedido(pedido)"></i></button>
-       </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+        <div class="divTable">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Valor Total</th>
+                <th>Data</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pedido of pedidos">
+                <td>{{this.getClienteById(pedido.clienteId).nome}}</td>
+                <td>{{this.getClienteById(pedido.clienteId).cpf}}</td>
+                <td>{{pedido.valorTotal}}</td>
+                <td>{{pedido.dtCriacao}}</td>
+                <td class="acao">
+                  <button><i class='bx bx-show' (click)="viewPedido(pedido)"></i></button>
+                  <button><i class='bx bx-edit' routerLink="/carrinho" (click)="editPedido(pedido)"></i></button>
+                  <button><i class='bx bx-trash' (click)="deletePedido(pedido)"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
