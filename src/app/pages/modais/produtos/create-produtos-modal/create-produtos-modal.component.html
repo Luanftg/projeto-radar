@@ -1,0 +1,40 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3 class="modal-title">Cadastrar Produto</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss()"></button>
+  </div>
+  <form [formGroup]="produtoForm">
+    <div class="modal-body">
+      <div class="inputs">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome:</label>
+          <input type="text" class="form-control textbox" id="nome" formControlName="nome">
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição:</label>
+          <input type="text" class="form-control textbox" id="descricao" formControlName="descricao">
+        </div>
+        <div class="mb-3">
+          <label for="valor" class="form-label">Valor:</label>
+          <input type="number" class="form-control textbox" id="valor" formControlName="valor">
+        </div>
+        <div class="mb-3">
+          <label for="qtdEstoque" class="form-label">Estoque:</label>
+          <input type="number" class="form-control textbox" id="qtdEstoque" formControlName="qtdEstoque">
+        </div>
+        <div class="mb-3">
+          <label for="photoUrl" class="form-label">Foto Url:</label>
+          <input type="file" accept="image/*" class="form-control textbox" id="photoUrl" formControlName="photoUrl" (change)="onFileSelected($event)">
+          <div  *ngIf="fotoCarregada">
+            <img class="photoUrl form-control" [src]="this.produtoForm.value.photoUrl">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-success" (click)="create()">Salvar</button>
+  </div>
+</div>

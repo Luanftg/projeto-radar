@@ -1,0 +1,38 @@
+<body>
+  <div class="container">
+    <div class="container-loja">
+      <div class="container" style="height: -webkit-fill-available;">
+        <div class="header">
+          <span>Lojas</span>
+          <button type="submit" (click)="CreateLoja()" id="new">Incluir</button>
+        </div>
+        <div class="container-busca">
+          <input type="search" class="form-control textbox busca" id="buscar" placeholder="Pesquisar..." [(ngModel)]="termoBuscar">
+        </div>
+        <div class="divTable">
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cep</th>
+                <th class="acao">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let loja of lojas| filter: termoBuscar">
+                <td>{{loja.nome}}</td>
+                <td>{{loja.cep | cep}}</td>
+                <td class="acao">
+                  <button><i class='bx bx-show' (click)="ViewLoja(loja)"></i></button>
+                  <button><i class='bx bx-edit' (click)="EditLoja(loja)"></i></button>
+                  <button><i class='bx bx-trash' (click)="DeleteLoja(loja)"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

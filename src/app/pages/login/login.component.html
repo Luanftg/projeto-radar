@@ -5,9 +5,9 @@
   <form [formGroup]="loginForm">
     <div class="inputs">
       <div class="mb-3">
-        <label for="login" class="form-label">Login:</label>
-        <input type="email" class="form-control textbox" id="login" placeholder="name@example.com"
-          formControlName="login" [ngClass]="mensagemErro ? 'is-invalid' : ''">
+        <label for="email" class="form-label">Login:</label>
+        <input type="email" class="form-control textbox" id="email" placeholder="name@example.com"
+          formControlName="email" [ngClass]="mensagemErro ? 'is-invalid' : ''">
       </div>
       <div class="mb-3">
         <label for="senha" class="form-label">Senha:</label>
@@ -17,7 +17,7 @@
       <div *ngIf="mensagemErro" class="alert alert-danger">
         <span>Email ou senha incorretos.</span>
       </div>
-      <button type="submit" (click)="verificaLogin()" class="btn botao">Login</button>
+        <button type="submit" (click)="verificaLogin()" class="btn botao">Login</button>
     </div>
   </form>
 </div>

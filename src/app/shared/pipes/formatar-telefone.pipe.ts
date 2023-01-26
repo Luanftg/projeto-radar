@@ -5,9 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatarTelefonePipe implements PipeTransform {
 
-  transform(telefone: Number): String {
-    let telefoneFormatado = telefone.toString();
-    return telefoneFormatado.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+  transform(telefone: String): String {
+    return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
   }
 
 }

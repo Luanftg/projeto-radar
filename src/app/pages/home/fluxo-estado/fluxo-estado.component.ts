@@ -1,8 +1,13 @@
 import { take } from 'rxjs';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChartOptions } from 'chart.js';
-import { RequestService } from 'src/app/shared/request/request.service';
+import { ClientesRequestService } from 'src/app/shared/request/clientes.service';
 import { BaseChartDirective } from 'ng2-charts';
+import { ICliente } from 'src/app/shared/models/cliente.interface';
+import { IClientePost } from 'src/app/shared/models/clientePost.interface';
+import { IEndereco } from 'src/app/shared/models/endereco.interface';
+import { EnderecoRequestService } from 'src/app/shared/request/endereco.service';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-fluxo-estado',
@@ -14,10 +19,12 @@ export class FluxoEstadoComponent implements OnInit {
 
 
   constructor(
-    private req: RequestService
+    private req: ClientesRequestService,
+    private endReq:EnderecoRequestService
   ) { }
 
   ngOnInit(): void {
+    this.popular()
     this.getClienteEstado()
   }
 
@@ -29,126 +36,14 @@ export class FluxoEstadoComponent implements OnInit {
   }
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  listaEstados = [
-    'acre',
-    'alagoas',
-    'amapa',
-    'amazonas',
-    'bahia',
-    'ceara',
-    'distritofederal',
-    'espiritosanto',
-    'goias',
-    'maranhao',
-    'matogrosso',
-    'matogrossodosul',
-    'minasgerais',
-    'para',
-    'paraiba',
-    'parana',
-    'pernambuco',
-    'piaui',
-    'riodejaneiro',
-    'riograndedonorte',
-    'riograndedosul',
-    'rondonia',
-    'roraima',
-    'santacatarina',
-    'saopaulo',
-    'sergipe',
-    'tocantins'
-]
-
-acre = 0
-alagoas = 0
-amapa = 0
-amazonas = 0
-bahia = 0
-ceara = 0
-distritofederal = 0
-espiritosanto = 0
-goias = 0
-maranhao = 0
-matogrosso = 0
-matogrossodosul = 0
-minasgerais = 0
-para = 0
-paraiba = 0
-parana = 0
-pernambuco = 0
-piaui = 0
-riodejaneiro = 0
-riograndedonorte = 0
-riograndedosul = 0
-rondonia = 0
-roraima = 0
-santacatarina = 0
-saopaulo = 0
-sergipe = 0
-tocantins = 0
-
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
   };
 
-  public pieChartLabels = [ 'Acre',
-  'Alagoas',
-  'Amapá',
-  'Amazonas',
-  'Bahia',
-  'Ceará',
-  'Distrito Federal',
-  'Espírito Santo',
-  'Goiás',
-  'Maranhão',
-  'Mato Grosso',
-  'Mato Grosso do Sul',
-  'Minas Gerais',
-  'Pará',
-  'Paraíba',
-  'Paraná',
-  'Pernambuco',
-  'Piauí',
-  'Rio de Janeiro',
-  'Rio Grande do Norte',
-  'Rio Grande do Sul',
-  'Rondônia',
-  'Roraima',
-  'Santa Catarina',
-  'São Paulo',
-  'Sergipe',
-  'Tocantins' ];
+  public pieChartLabels:string[] = [] ;
 
   public pieChartDatasets = [ {
-    data: [
-      this.acre,
-      this.alagoas,
-      this.amapa,
-      this.amazonas,
-      this.bahia,
-      this.ceara,
-      this.distritofederal,
-      this.espiritosanto,
-      this.goias,
-      this.maranhao,
-      this.matogrosso,
-      this.matogrossodosul,
-      this.minasgerais,
-      this.para,
-      this.paraiba,
-      this.parana,
-      this.pernambuco,
-      this.piaui,
-      this.riodejaneiro,
-      this.riograndedonorte,
-      this.riograndedosul,
-      this.rondonia,
-      this.roraima,
-      this.santacatarina,
-      this.saopaulo,
-      this.sergipe,
-      this.tocantins
-    ]
+    data: [] as number[]
   } ];
   public pieChartLegend = false;
   public pieChartPlugins = [];
@@ -156,27 +51,68 @@ tocantins = 0
   getClienteEstado(){
     this.req.getCliente()
     .pipe(take(1))
-    .subscribe( res => this.verificaEstado(res))
+    .subscribe( res =>{
+      this.endReq.getEndereco().pipe(take(1))
+      .subscribe( res2=>this.verificaEstado
+        (<IClientePost[]>res,<IEndereco[]>res2)
+    )})
   }
 
-  verificaEstado(res:any){
-    let indexEstadoLista;
-    for (let i = 0; i < res.length; i++) {
-      if(this.listaEstados.includes(res[i].estado)){
-        indexEstadoLista = this.listaEstados.indexOf(res[i].estado)
-        this.pieChartDatasets[0].data[indexEstadoLista]++
-      }
-    }
-    this.chart?.update();
-    this.mostraListaEstado()
-  }
   listaEstadoExistente: string[] = []
-
-  mostraListaEstado(){
-    for (let i = 0; i < this.pieChartDatasets[0].data.length; i++) {
-      if(this.pieChartDatasets[0].data[i] != 0){
-        this.listaEstadoExistente.push(this.pieChartLabels[i])
+  verificaEstado(res:IClientePost[], end:IEndereco[]){
+    let hashFindEstado = new Map<string,number>()
+    let hashFindEndereco = new Map<number,number>()
+    for (let i = 0; i < end.length; i++) {
+      hashFindEndereco.set(end[i].id,i);
+    }
+    let lista:number[]=[];
+    let listaNome:string[]=[];
+    for (let i = 0; i < res.length; i++) {
+      let estado = end[hashFindEndereco.get(res[i]?.enderecoId||0)||0].estado
+      let id = hashFindEstado.get(estado)||0
+      if(id){
+        lista[id]++
+      }else{
+        lista.push(1);
+        let nomeEstado=this.nomeEstado.get(estado)||estado
+        listaNome.push(nomeEstado);
+        hashFindEstado.set(estado, listaNome.length-1);
       }
     }
+    this.pieChartDatasets[0].data=lista
+    this.pieChartLabels=listaNome.sort();
+    this.listaEstadoExistente=listaNome;
+    this.chart?.update();
   }
+
+  popular(){
+    this.nomeEstado.set("AC","Acre")
+    this.nomeEstado.set("AL","Alagoas")
+    this.nomeEstado.set("AP","Amapá")
+    this.nomeEstado.set("AM","Amazonas")
+    this.nomeEstado.set("BA","Bahia")
+    this.nomeEstado.set("CE","Ceará")
+    this.nomeEstado.set("DF","Distrito Federal")
+    this.nomeEstado.set("ES","Espírito Santo")
+    this.nomeEstado.set("GO","Goiás")
+    this.nomeEstado.set("MA","Maranhão")
+    this.nomeEstado.set("MT","Mato Grosso")
+    this.nomeEstado.set("MS","Mato Grosso do Sul")
+    this.nomeEstado.set("MG","Minas Gerais")
+    this.nomeEstado.set("PA","Pará")
+    this.nomeEstado.set("PB","Paraíba")
+    this.nomeEstado.set("PR","Paraná")
+    this.nomeEstado.set("PE","Pernambuco")
+    this.nomeEstado.set("PI","Piauí")
+    this.nomeEstado.set("RJ","Rio de Janeiro")
+    this.nomeEstado.set("RN","Rio Grande do Norte")
+    this.nomeEstado.set("RS","Rio Grande do Sul")
+    this.nomeEstado.set("RO","Rondônia")
+    this.nomeEstado.set("RR","Roraima")
+    this.nomeEstado.set("SC","Santa Catarina")
+    this.nomeEstado.set("SP","São Paulo")
+    this.nomeEstado.set("SE","Sergipe")
+    this.nomeEstado.set("TO","Tocantins")
+  }
+  nomeEstado = new Map<string,string>()
 }

@@ -1,0 +1,43 @@
+<body>
+  <div class="container">
+    <div class="container-campanha">
+      <div class="container" style="height: -webkit-fill-available;">
+        <div class="container">
+          <div class="header">
+            <span>Campanhas</span>
+            <div>
+              <button type="submit" routerLink="/prateleira" id="new" class="include">Nova Campanha</button>
+            </div>
+          </div>
+          <div class="container-busca">
+            <input type="search" class="form-control textbox busca" id="buscar" placeholder="Pesquisar..." [(ngModel)]="termoBuscar">
+          </div>
+          <div class="divTable">
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>Data</th>
+                  <th class="acao">Ações</th>
+                </tr>
+              </thead>
+               <tbody>
+              <tr *ngFor="let campanha of campanhas">
+                <td>{{campanha.nome}}</td>
+                <td>{{campanha.descricao}}</td>
+                <td>{{campanha.dtCriacao | date: 'dd/MM/yyyy'}}</td>
+                <td class="acao">
+                  <button><i class='bx bx-edit' routerLink="/prateleira" (click)="editCampanha(campanha)"></i></button>
+                  <button><i class='bx bx-trash' (click)="deleteCampanha(campanha)"></i></button>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

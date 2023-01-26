@@ -21,14 +21,15 @@ export interface IClienteForm extends FormGroup{
  export interface ICliente {
   id: number,
   nome: string,
-  telefone: number,
+  telefone: string,
   email: string,
-  cpf: number,
-  cep: number,
+  cpf: string,
+  cep: string,
   logradouro:string,
-  numero: number,
+  numero: string,
   bairro:string,
   cidade: string,
   estado: string,
-  complemento: string
+  complemento: string,
+  enderecoId?:number
 }

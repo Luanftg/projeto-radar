@@ -1,0 +1,41 @@
+<body>
+  <div class="container">
+    <div class="container-pedido">
+      <div class="container" style="height: -webkit-fill-available;">
+        <div class="header">
+          <span>Listagem de Pedidos</span>
+        </div>
+        <div class="container-busca">
+          <input type="search" class="form-control textbox busca" id="buscar" placeholder="Pesquisar..." [(ngModel)]="termoBuscar">
+        </div>
+
+        <div class="divTable">
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Valor Total</th>
+                <th>Data da Compra</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pedido of pedidos">
+                <td>{{this.getClienteById(pedido.clienteId).nome}}</td>
+                <td>{{this.getClienteById(pedido.clienteId).cpf | cpf}}</td>
+                <td>{{pedido.valorTotal | currency}}</td>
+                <td>{{pedido.dtCriacao | date: 'dd/MM/yyyy'}}</td>
+                <td class="acao">
+                  <button><i class='bx bx-edit' routerLink="/carrinho" (click)="editPedido(pedido)"></i></button>
+                  <button><i class='bx bx-trash' (click)="deletePedido(pedido)"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

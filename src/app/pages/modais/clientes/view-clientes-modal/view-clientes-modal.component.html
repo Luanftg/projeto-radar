@@ -1,0 +1,60 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3 class="modal-title">Visualizar Cliente</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="clienteForm" class="form">
+      <div class="inputs">
+        <div class="mb-3">
+          <label for="nome" class="form-label" >Nome:</label>
+          <input type="text" class="form-control textbox" id="nome" formControlName="nome" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="telefone" class="form-label">Telefone:</label>
+          <input type="text" class="form-control textbox" id="telefone" formControlName="telefone" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control textbox" id="email" formControlName="email" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="cpf" class="form-label">CPF:</label>
+          <input type="text" class="form-control textbox" id="cpf" formControlName="cpf" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="cep" class="form-label">CEP:</label>
+          <input type="text" class="form-control textbox" id="cep" formControlName="cep" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="logradouro" class="form-label">Logradouro:</label>
+          <input type="text" class="form-control textbox" id="logradouro" formControlName="logradouro" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="numero" class="form-label">Número:</label>
+          <input type="text" class="form-control textbox" id="numero" formControlName="numero" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="bairro" class="form-label">Bairro:</label>
+          <input type="text" class="form-control textbox" id="bairro" formControlName="bairro" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="cidade" class="form-label">Cidade:</label>
+          <input type="text" class="form-control textbox" id="cidade" formControlName="cidade" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado:</label>
+          <input type="text" class="form-control textbox" id="estado" formControlName="estado" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="complemento" class="form-label">Complemento:</label>
+          <input type="string" class="form-control textbox" id="complemento" formControlName="complemento" readonly>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
+  </div>
+</div>

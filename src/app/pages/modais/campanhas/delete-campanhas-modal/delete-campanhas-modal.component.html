@@ -1,0 +1,14 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3 class="modal-title">Excluir Campanha</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <span>Tem certeza que deseja excluir essa campanha?</span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
+    <button type="button" class="btn btn-danger" routerLink="/campanhas" (click)="delete()">Deletar</button>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<body>
+  <div class="container container-tabela">
+    <div *ngIf="!auth.verificaLogado()" class="d-flex justify-content-center">
+      <div class="alert alert-warning text-center mt-4 w-25">
+        <p><strong>Você não tem permissão para cadastrar novos usuarios.</strong></p>
+      </div>
+    </div>
+
+    <div class="container-usuario">
+      <div class="container">
+        <div class="header">
+          <span>Usuarios</span>
+          <button type="submit" (click)="createUsuario()" id="new">Incluir</button>
+        </div>
+
+        <div class="container-busca">
+          <input type="search" class="form-control textbox busca" id="buscar" placeholder="Pesquisar..." [(ngModel)]="termoBuscar">
+        </div>
+        <div class="divTable">
+         
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th style="width:50%">E-mail</th>
+                <th>Regra</th>
+                <th class="acao">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios| filter: termoBuscar">
+                <td class="nomeUsuario">{{usuario.nome}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.regra}}</td>
+                <td class="acao">
+                  <button><i class='bx bx-show' (click)="viewUsuario(usuario)"></i></button>
+                  <button><i class='bx bx-edit' (click)="editUsuario(usuario)"></i></button>
+                  <button><i class='bx bx-trash' (click)="deleteUsuario(usuario)"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+

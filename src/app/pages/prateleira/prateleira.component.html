@@ -1,0 +1,67 @@
+<br>
+<div cdkDropListGroup class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3">
+          <h2 class="text-center titulo">Produtos</h2>
+          <hr>
+          <div class="campanha-estoque text-center">
+            <div cdkDropList #estoquelista="cdkDropList" [cdkDropListData]="estoque" (cdkDropListDropped)="drop($event)"
+              cdkDropListSortingDisabled id="0">
+              <!-- <div class="estoque-lista" *ngFor="let item of estoque" cdkDrag getSortedItems>{{item.nome}}</div> -->
+              <div class="estoque-lista" *ngFor="let item of estoque" cdkDrag getSortedItems><img *cdkDragPreview
+                  [src]="item.photoUrl" [alt]="item.nome" [attr.id]="item.nome">{{item.nome}}</div>
+            </div>
+          </div>
+          <div class="paginacao">
+          </div>
+        </div>
+        <div class="prateleira col-md-6">
+          <div class="text-center">
+            <h2 class="titulo">Prateleira</h2>
+            <hr>
+          </div>
+          <div>
+            <div class="prateleira-nichos">
+              <div class="row linha1">
+                <div *ngFor="let i of numbers" cdkDropList #list1="cdkDropList" [cdkDropListData]="prateleiras[i]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)" [id]="(i+1).toString()">
+                  <div class="prateleira-list" *ngFor="let item of prateleiras[i]" cdkDrag><img [src]="item.photoUrl"
+                      class="img-med"></div>
+                  <!-- <div class="prateleira-list" *ngFor="let item of prateleiras[0]" cdkDrag><img [src]="item.image"
+                        class="img-med"></div> -->
+                </div>
+              </div>
+              <div class="row linha2">
+                <div *ngFor="let i of numbers" cdkDropList #list1="cdkDropList" [cdkDropListData]="prateleiras[i+5]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)" [id]="(i+6).toString()">
+                  <div class="prateleira-list" *ngFor="let item of prateleiras[i+5]" cdkDrag><img [src]="item.photoUrl"
+                      class="img-med"></div>
+                  <!-- <div class="prateleira-list" *ngFor="let item of prateleiras[0]" cdkDrag><img [src]="item.image"
+                      class="img-med"></div> -->
+                </div>
+              </div>
+              <div class="row linha3">
+                <div *ngFor="let i of numbers" cdkDropList #list1="cdkDropList" [cdkDropListData]="prateleiras[i+10]"
+                  class="campanha-prateleira" (cdkDropListDropped)="drop($event)" [id]="(i+11).toString()">
+                  <div class="prateleira-list" *ngFor="let item of prateleiras[i+10]" cdkDrag><img [src]="item.photoUrl"
+                      class="img-med"></div>
+                  <!-- <div class="prateleira-list" *ngFor="let item of prateleiras[0]" cdkDrag><img [src]="item.image"
+                      class="img-med"></div> -->
+                </div>
+              </div>
+
+              <div class="btnSalvar row justify-content-end">
+                <div class="d-grid gap-2 d-md-block">
+                  <button class="btn btn-success btn-lg" (click)="salvar()">Salvar</button>
+                  <button class="btn btn-danger btn-lg limpar" (click)="clear()">Limpar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

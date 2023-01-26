@@ -3,7 +3,10 @@ import { ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { take, tap } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RequestService } from 'src/app/shared/request/request.service';
+import { ProdutosRequestService } from 'src/app/shared/request/produtos.service';
+import { PedidosRequestService } from 'src/app/shared/request/pedidos.service';
+import { ClientesRequestService } from 'src/app/shared/request/clientes.service';
+import { IPedido } from 'src/app/shared/models/pedido.interface';
 
 @Component({
   selector: 'app-fluxo-clientes',
@@ -16,20 +19,11 @@ export class FluxoClientesComponent implements OnInit {
 
   fluxoAno = "";
 
-  fluxoJaneiro = 0
-  fluxoFevereiro = 0
-  fluxoMarco = 0
-  fluxoAbril = 0
-  fluxoMaio = 0
-  fluxoJunho = 0
-  fluxoJulho = 0
-  fluxoAgosto = 0
-  fluxoSetembro = 0
-  fluxoOutubro = 0
-  fluxoNovembro = 0
-  fluxoDezembro = 0
+  fluxo= [0,0,0,0,0,0,0,0,0,0,0,0]
 
-  constructor(private req: RequestService) { }
+  constructor(private clienteReq: ClientesRequestService,
+    private produtoReq: ProdutosRequestService,
+    private pedidoReq: PedidosRequestService,) { }
 
   ngOnInit(): void {
     const dataInicial = new Date()
@@ -59,18 +53,18 @@ export class FluxoClientesComponent implements OnInit {
     datasets: [
       {
         data: [
-          this.fluxoJaneiro,
-          this.fluxoFevereiro,
-          this.fluxoMarco,
-          this.fluxoAbril,
-          this.fluxoMaio,
-          this.fluxoJunho,
-          this.fluxoJulho,
-          this.fluxoAgosto,
-          this.fluxoSetembro,
-          this.fluxoOutubro,
-          this.fluxoNovembro,
-          this.fluxoDezembro
+          this.fluxo[0],
+          this.fluxo[1],
+          this.fluxo[2],
+          this.fluxo[3],
+          this.fluxo[4],
+          this.fluxo[5],
+          this.fluxo[6],
+          this.fluxo[7],
+          this.fluxo[8],
+          this.fluxo[9],
+          this.fluxo[10],
+          this.fluxo[11],
         ],
         label: 'Nº de Pedidos por Mês',
         barThickness: 20,
@@ -99,13 +93,13 @@ export class FluxoClientesComponent implements OnInit {
   }]
 
   chamaApiClientes() {
-    this.req.getCliente()
+    this.clienteReq.getCliente()
       .pipe(take(1))
       .subscribe(res => this.quantidadeClientes(res))
   }
 
   chamaApiProduto() {
-    this.req.getProduto()
+    this.produtoReq.getProduto()
       .pipe(take(1))
       .subscribe(res => this.quantidadeProduto(res))
   }
@@ -113,9 +107,9 @@ export class FluxoClientesComponent implements OnInit {
   fluxoPedidoClienteApi(ano: string) {
     this.fluxoAno = ano;
 
-    this.req.getPedidoCliente()
+    this.pedidoReq.getPedido()
       .pipe(take(1))
-      .subscribe(res => this.filtraPorMes(res, this.fluxoAno))
+      .subscribe(res => this.filtraPorMes(<IPedido[]>res, this.fluxoAno))
   }
 
   quantidadeClientes(res: any) {
@@ -126,51 +120,16 @@ export class FluxoClientesComponent implements OnInit {
     this.produtos = res.length
   }
 
-  filtraPorMes(arr: any, ano: string) {
-
+  filtraPorMes(arr: IPedido[], ano: string) {
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].data.toString().slice(0, -6) == ano.toString()) {
-        if (arr[i].data.toString().slice(5, -3) == '01') {
-          this.fluxoJaneiro += 1
-          this.barChartData.datasets[0].data[0] = this.fluxoJaneiro
-        } else if (arr[i].data.toString().slice(5, -3) == '02') {
-          this.fluxoFevereiro += 1
-          this.barChartData.datasets[0].data[1] = this.fluxoFevereiro
-        } else if (arr[i].data.toString().slice(5, -3) == '03') {
-          this.fluxoMarco += 1
-          this.barChartData.datasets[0].data[2] = this.fluxoMarco
-        } else if (arr[i].data.toString().slice(5, -3) == '04') {
-          this.fluxoAbril += 1
-          this.barChartData.datasets[0].data[3] = this.fluxoAbril
-        } else if (arr[i].data.toString().slice(5, -3) == '05') {
-          this.fluxoMaio += 1
-          this.barChartData.datasets[0].data[4] = this.fluxoMaio
-        } else if (arr[i].data.toString().slice(5, -3) == '06') {
-          this.fluxoJunho += 1
-          this.barChartData.datasets[0].data[5] = this.fluxoJunho
-        } else if (arr[i].data.toString().slice(5, -3) == '07') {
-          this.fluxoJulho += 1
-          this.barChartData.datasets[0].data[6] = this.fluxoJulho
-        } else if (arr[i].data.toString().slice(5, -3) == '08') {
-          this.fluxoAgosto += 1
-          this.barChartData.datasets[0].data[7] = this.fluxoAgosto
-        } else if (arr[i].data.toString().slice(5, -3) == '09') {
-          this.fluxoSetembro += 1
-          this.barChartData.datasets[0].data[8] = this.fluxoSetembro
-        } else if (arr[i].data.toString().slice(5, -3) == '10') {
-          this.fluxoOutubro += 1
-          this.barChartData.datasets[0].data[9] = this.fluxoOutubro
-        } else if (arr[i].data.toString().slice(5, -3) == '11') {
-          this.fluxoNovembro += 1
-          this.barChartData.datasets[0].data[10] = this.fluxoNovembro
-        } else if (arr[i].data.toString().slice(5, -3) == '12') {
-          this.fluxoDezembro += 1
-          this.barChartData.datasets[0].data[11] = this.fluxoDezembro
-        }
+      let data = new Date(arr[i].dtCriacao)
+      if(data.getFullYear()==Number(ano)){
+        let mes = data.getMonth()
+        this.fluxo[mes] += 1
+        this.barChartData.datasets[0].data[mes] = this.fluxo[mes]
       }
     }
     this.chart?.update()
-
   }
 
 }

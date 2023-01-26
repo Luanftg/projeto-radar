@@ -1,0 +1,31 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3 class="modal-title">Cadastrar Campanha</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="campanhaForm" class="form">
+      <div class="inputs">
+        <div class="mb-3">
+          <label for="nome" class="form-label" >Nome:</label>
+          <input type="text" class="form-control textbox" id="nome" formControlName="nome">
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descricao:</label>
+          <input type="text" class="form-control textbox" id="descricao" formControlName="descricao">
+        </div>
+        <div class="mb-3">
+          <label for="lojaId" class="form-label">LojaId:</label>
+          <input type="number" class="form-control textbox" id="lojaId" formControlName="lojaId">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.close()">Cancelar</button>
+    <button type="button" class="btn btn-success" routerLink="/campanhas" (click)="createCampanha()">Salvar</button>
+  </div>
+</div>
+
+

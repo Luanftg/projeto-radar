@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth/auth.service';
 import { Component, inject, Injectable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-
+import { Carrinho } from 'src/app/services/Carrinho';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -20,6 +20,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  getQuantidade(){
+    return Carrinho.buscaTamanho();
   }
 
   logout(){

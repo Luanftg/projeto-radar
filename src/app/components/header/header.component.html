@@ -4,7 +4,11 @@
       <li routerLink="home" *ngIf="mostraHeader">Home</li>
       <li routerLink="produtos" *ngIf="mostraHeader">Produtos</li>
       <li routerLink="clientes" *ngIf="mostraHeader">Clientes</li>
+      <li routerLink="lojas" *ngIf="mostraHeader">Lojas</li>
+      <li routerLink="campanhas" *ngIf="mostraHeader">Campanhas</li>
       <li routerLink="pedidos" *ngIf="mostraHeader">Pedidos</li>
+      <li routerLink="carrinho" *ngIf="mostraHeader">Carrinho({{getQuantidade()}})</li>
+      <li routerLink="usuarios" *ngIf="mostraHeader">Usuários</li>
       <li (click)="logout()" *ngIf="mostraHeader && auth.verificaLogado()">Logout</li>
     </ul>
 </div>

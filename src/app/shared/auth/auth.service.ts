@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ILoginRecebido } from '../models/loginRecebido.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -8,30 +8,19 @@ export class AuthService {
 
   constructor() { }
 
-  setLogin(usuario:string){
-    localStorage.setItem( 'usuario', usuario)
-    console.log(usuario)
+  setToken(usuario:ILoginRecebido){
+    localStorage.setItem( 'token', usuario.token)
   }
 
-  setAdm(adm:string){
-    localStorage.setItem('adm',adm)
-    console.log(adm)
-  }
-
-  getLogin(){
-    let usuario = localStorage.getItem('usuario')
+  getToken(){
+    let usuario = localStorage.getItem('token')
     if(usuario){
-      console.log('existe')
-      return true
+      return usuario
     }
     return null
   }
 
   verificaLogado(): boolean{
-    return localStorage.getItem('usuario') ? true : false
-  }
-
-  verificaAdm(): boolean{
-    return localStorage.getItem('adm') ? true : false
+    return localStorage.getItem('token') ? true : false
   }
 }

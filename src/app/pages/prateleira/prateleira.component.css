@@ -1,0 +1,115 @@
+/* CSS responsável por transformar o item em imagem ao arrastar */
+.cdk-drag-preview{
+  box-sizing: border-box;
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* CSS sombra ao posicionar o item ao arrastar */
+.cdk-drag-placeholder {
+  opacity: .3;
+}
+
+/* CSS Animação suavidade do movimento */
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* CSS responsável pelo tamanho da imagem nos nichos */
+.img-med {
+  border-radius: 15%;
+  width: 80px;
+  height: 80px;
+  }
+
+  .titulo {
+    font-size: 30px;
+  }
+
+/* CSS responsável pela lista do estoque */
+.estoque-lista {
+  width: 150px;
+  height: 50px;
+  padding: 20px 10px;
+  margin: 4px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+/* CSS responsável pela lista do estoque */
+.campanha-estoque {
+  padding-left: 150px;
+}
+
+/* CSS responsável pela DIV da prateleira */
+.prateleira {
+  width: 65%;
+  height: 800px;
+  margin-left: 100px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  opacity: 80%;
+  background-image: url("../../../assets/img/oneshelf.png");
+} 
+ 
+/* CSS responsável pelo conteúdo dos nichos da prateleira */
+.prateleira-nichos {
+  padding-left: 50px;
+}
+
+
+/* CSS responsável pelos itens da Prateleira */
+.prateleira-list {
+  padding-bottom: 5px;
+}
+
+/* CSS responsável pelos nichos da prateleira */
+.campanha-prateleira {
+  list-style-type: none;
+  width: 220px;
+  height: 190px;
+  margin-bottom: 4px;
+  padding-top: 5px;
+  padding-left: 20px;
+  /* border: solid 1px rgb(0, 0, 0); */
+  justify-content: space-between;
+  display:inline-flex;
+  flex-wrap: wrap;
+  
+}
+
+/* CSS linhas de nichos */
+.linha1 {
+ padding-top: 60px;
+ padding-left: 30px;
+}
+.linha2 {
+  padding-top: 32px;
+ padding-left: 30px;
+}
+.linha3 {
+  padding-top: 32px;
+ padding-left: 30px;
+}
+
+/* CSS responsável pelo botão de Salvar */
+.btnSalvar {
+  padding-left: 500px;
+  padding-top: 15px;
+  width: 750px;
+}
+
+.limpar {
+  margin-left: 20px;
+}

@@ -1,0 +1,32 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h3 class="modal-title">Editar Usuario</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="activeModal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="usuarioForm">
+      <div class="modal-body">
+        <div class="inputs">
+          <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" readonly class="form-control textbox" id="nome" formControlName="nome">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail:</label>
+            <input type="text" readonly class="form-control textbox" id="email" formControlName="email">
+          </div>
+          <div class="mb-3">
+            <label for="regra" class="form-label">Regra:</label>
+            <input type="text" readonly class="form-control textbox" id="regra" formControlName="regra">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
+  </div>
+</div>
+
+
