@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Prateleira } from 'src/app/services/Prateleira';
 import { ICampanha, ICampanhaForm } from 'src/app/shared/models/campanha.interface';
@@ -14,7 +15,8 @@ export class CreateCampanhaModalComponent implements OnInit{
   constructor(
     public activeModal: NgbActiveModal,
     private fb:FormBuilder,
-    private http:HttpClient
+    private http:HttpClient,
+    private router:Router,
   ) { }
 
   ngOnInit(): void {
@@ -44,10 +46,10 @@ export class CreateCampanhaModalComponent implements OnInit{
   createCampanha(){
     Prateleira.campanha.descricao=this.campanhaForm.value.descricao
     Prateleira.campanha.dtCriacao=this.campanhaForm.value.dtCriacao
-    Prateleira.campanha.lojaId=this.campanhaForm.value.lojaId
+    Prateleira.campanha.lojaId=1
     Prateleira.campanha.nome=this.campanhaForm.value.nome
     Prateleira.campanha.photoUrl=""
-    Prateleira.save(this.http)
+    Prateleira.save(this.http,this.router)
     this.activeModal.dismiss()
   }
 }

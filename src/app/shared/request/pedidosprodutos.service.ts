@@ -27,6 +27,6 @@ export class PedidosProdutosRequestService {
     return this.http.put<IPedidoProduto>(environment.url + 'pedidosProdutos/'+pedidoProduto.id,pedidoProduto,{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
   }
   deletePedidoProduto(id:number){
-    return this.http.delete<IPedidoProduto>(environment.url + `produtos/${id}`,{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
+    return this.http.delete<IPedidoProduto>(environment.url + `pedidosProdutos/${id}`,{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
   }
 }

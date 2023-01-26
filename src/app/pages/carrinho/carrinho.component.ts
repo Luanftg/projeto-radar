@@ -13,6 +13,7 @@ import { IClientePost } from 'src/app/shared/models/clientePost.interface';
 import { IEndereco } from 'src/app/shared/models/endereco.interface';
 import { EnderecoRequestService } from 'src/app/shared/request/endereco.service';
 import { Prateleira } from 'src/app/services/Prateleira';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrinho',
@@ -26,7 +27,8 @@ export class CarrinhoComponent implements OnInit {
     private endRequest: EnderecoRequestService,
     private requestc: ClientesRequestService,
     public auth: AuthService,
-    private http:HttpClient
+    private http:HttpClient,
+    private router:Router
     ) { 
     }
   valor_total=0;
@@ -77,9 +79,6 @@ getClientes(){
     })
   })
 }
-delete(index:number){
-  Carrinho.excluirProduto(index);
-}
 editar = false;
 clienteId = 0;
 nomeCliente=""
@@ -103,7 +102,7 @@ calcularValorTotal() {
   this.valor_total=Carrinho.getValor_Total();
 }
 Excluir(id:number){
-  Carrinho.excluirProduto(id);
+  Carrinho.excluirProduto(this.http,id);
   this.calcularValorTotal();
 }
 clienteSelecionado = ""
@@ -130,6 +129,6 @@ Subtrair(i:number){
     if(!this.editar){
       Carrinho.setCliente_Id(Number(this.clienteSelecionado))
     }
-    Carrinho.salvar(this.http);
+    Carrinho.salvar(this.http,this.router);
   }
 }

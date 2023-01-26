@@ -27,6 +27,11 @@ export class PrateleiraComponent {
     private modalService: NgbModal,) {
     this.getProdutos();
     this.popular();
+    let produtoFalso = {} as IProduto
+    produtoFalso.id=-1;
+    produtoFalso.photoUrl=" ";
+    produtoFalso.nome="Vazio"
+    this.estoque.push(produtoFalso)
   }
 
    // Função responsável por buscar a lista de medicamentos na URL do Environment, que aponta para a api.
@@ -45,6 +50,9 @@ export class PrateleiraComponent {
             }
             estoquePego.forEach(produto=>{
               if(!hashFindProduto.get(produto.id)){
+                if(this.estoque.length==1&&this.estoque[0].id==-1){
+                  this.estoque.pop()
+                }
                 this.estoque.push(produto);
               }else{
                 this.prateleiras[Prateleira.prateleira[(hashFindProduto.get(produto.id)||1)-1].posicaoX]
@@ -54,6 +62,9 @@ export class PrateleiraComponent {
             
           });
         }else{
+          if(estoquePego.length>1&&this.estoque[0].id==-1){
+            this.estoque.pop()
+          }
           this.estoque=estoquePego
         }
       })
@@ -93,6 +104,9 @@ export class PrateleiraComponent {
     let produtoFalso = {} as IProduto
     produtoFalso.id=-1;
     produtoFalso.photoUrl=" ";
+    if(this.estoque[0].id==-1){
+      this.estoque.pop()
+    }
     for (let i = 0; i < this.prateleiras.length; i++) {
       for (let j = 0; j < this.prateleiras[i].length; j++) {
         if(this.prateleiras[i][j].id>-1){
@@ -105,27 +119,42 @@ export class PrateleiraComponent {
 
 
   moveItemInArray(id: number, previousIndex: number, currentIndex: number) {
+    if(currentIndex==4){
+      currentIndex--
+    }
     let produto = this.prateleiras[id][previousIndex]
     this.prateleiras[id][previousIndex]=this.prateleiras[id][currentIndex]
     this.prateleiras[id][currentIndex]=produto
   }
 
   transferArrayItem(idPreviousContainer:number,idCurrentContainer:number,previousIndex: number, currentIndex: number){
-    
+    if(currentIndex==4){
+      currentIndex--
+    }
+    let produtoFalso = {} as IProduto
+        produtoFalso.id=-1;
+        produtoFalso.photoUrl=" ";
     if(!idPreviousContainer){
-      if(this.prateleiras[idCurrentContainer-1][currentIndex].id==-1){
-        this.prateleiras[idCurrentContainer-1][currentIndex]=this.estoque[previousIndex];
-        this.estoque.splice(previousIndex,1);
-      }else{
+      if(this.estoque[previousIndex].id!=-1){
+        if(this.prateleiras[idCurrentContainer-1][currentIndex].id==-1){
+          this.prateleiras[idCurrentContainer-1][currentIndex]=this.estoque[previousIndex];
+          this.estoque.splice(previousIndex,1);
+      }
+      else{
         let produto = this.estoque[previousIndex]
         this.estoque[previousIndex]=this.prateleiras[idCurrentContainer-1][currentIndex]
         this.prateleiras[idCurrentContainer-1][currentIndex]=produto
       }
+      if(this.estoque.length==0){
+        produtoFalso.nome="Vazio"
+        this.estoque.push(produtoFalso)
+      }
+    }
     } else if(!idCurrentContainer){
       if(this.prateleiras[idPreviousContainer-1][previousIndex].id!=-1){
-        let produtoFalso = {} as IProduto
-        produtoFalso.id=-1;
-        produtoFalso.photoUrl=" ";
+        if(this.estoque[0].id==-1){
+          this.estoque.pop()
+        }
         this.estoque.push(this.prateleiras[idPreviousContainer-1][previousIndex])
         this.prateleiras[idPreviousContainer-1][previousIndex]=produtoFalso
       }
@@ -135,7 +164,16 @@ export class PrateleiraComponent {
       this.prateleiras[idCurrentContainer-1][currentIndex]=produto
     }
   }
-  
+  getText(texto:string){
+    if(texto.length<15){
+      return texto;
+    }
+    let text=texto.split(" ")[0];
+    if(text.length<15){
+      return text
+    }
+    return text.slice(0,14)
+  }
   salvar() {
       for (let i = 0; i < 15; i++) {
         const elementos = this.prateleiras[i];

@@ -1,4 +1,5 @@
 import { HttpClient, HttpHandler } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { take } from "rxjs";
 import { AuthService } from "../shared/auth/auth.service";
 import { ICampanha } from "../shared/models/campanha.interface";
@@ -10,11 +11,13 @@ export  class  Prateleira{
     public static campanha:ICampanha = {} as ICampanha;
     public static prateleira:IPosicaoProduto[]=[];
 
-    public static save(http:HttpClient) {
+    public static save(http:HttpClient, router:Router) {
         let campRequest=new CampanhasRequestService(http, new AuthService)
         let pratRequest=new PosicaoProdutoRequestService(http, new AuthService)
         if(Prateleira.campanha.id){
-            campRequest.updateCampanha(Prateleira.campanha).pipe(take(1)).subscribe();
+            campRequest.updateCampanha(Prateleira.campanha).pipe(take(1)).subscribe(
+                res=>router.navigate(['campanhas'])
+            );
             let hashFindProduto = new Map<number,number>();
             let hashFindCadastrado = new Map<number,boolean>();
             for (let i = 0; i < Prateleira.prateleira.length; i++) {
@@ -43,6 +46,7 @@ export  class  Prateleira{
         }else {
             campRequest.postCampanha(Prateleira.campanha).pipe(take(1)).subscribe(
                 ()=>{
+                    router.navigate(['campanhas']);
                     campRequest.getCampanha().pipe(take(1)).subscribe(
                         res=>{
                             let id = (<ICampanha[]>res).pop()?.id||0
