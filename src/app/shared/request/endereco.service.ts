@@ -21,6 +21,8 @@ export class EnderecoRequestService {
   }
 
   updateEndereco(endereco:IEndereco){
+    endereco.numero=endereco.numero.toString()
+    console.log(environment.url + 'enderecos/'+endereco.id,endereco,{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
     return this.http.put<IEndereco>(environment.url + 'enderecos/'+endereco.id,endereco,{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
   }
 
