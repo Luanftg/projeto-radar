@@ -11,7 +11,7 @@
               cdkDropListSortingDisabled id="0">
               <!-- <div class="estoque-lista" *ngFor="let item of estoque" cdkDrag getSortedItems>{{item.nome}}</div> -->
               <div class="estoque-lista" *ngFor="let item of estoque" cdkDrag getSortedItems><img *cdkDragPreview
-                  [src]="item.photoUrl" [alt]="item.nome" [attr.id]="item.nome">{{item.nome}}</div>
+                  [src]="item.photoUrl" [alt]="item.nome" [attr.id]="item.nome">{{getText(item.nome)}}</div>
             </div>
           </div>
           <div class="paginacao">

@@ -7,7 +7,11 @@ export function verificaCPF(cpf:string){
         const n = Number(cpf[i]);
         total+= (10-i)*n
     }
-    if(11-(total%11)!=Number(cpf[9])){
+    let mod = total%11
+    if(mod<2){
+        mod=11;
+    }
+    if(11-mod!=Number(cpf[9])){
         return "Insira um cpf válido";
     }
     total=0
@@ -15,7 +19,11 @@ export function verificaCPF(cpf:string){
         const n = Number(cpf[i]);
         total+= (11-i)*n
     }
-    if(11-(total%11)!=Number(cpf[10])){
+    mod = total%11
+    if(mod<2){
+        mod=11;
+    }
+    if(11-mod!=Number(cpf[10])){
         return "Insira um cpf válido";
     }
     return "";
