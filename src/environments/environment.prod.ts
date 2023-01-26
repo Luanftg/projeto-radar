@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
+  production: true,
   url: "http://azure-api.luanftg.com.br/"
 };
