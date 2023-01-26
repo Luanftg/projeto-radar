@@ -49,7 +49,11 @@ export class UsuariosComponent {
   }
 
   createUsuario(){
-    this.modalService.open(CreateUsuariosModalComponent);
+    const modalRef =this.modalService.open(CreateUsuariosModalComponent);
+    modalRef.dismissed.subscribe(()=>{
+      this.usuarios=[]
+      this.getUsuario();
+    })
   }
 
   
@@ -63,11 +67,19 @@ export class UsuariosComponent {
     }) as IUsuarioForm
     const modalRef = this.modalService.open(EditUsuariosModalComponent);
     modalRef.componentInstance.usuarioForm = usuarioForm;
+    modalRef.dismissed.subscribe(()=>{
+      this.usuarios=[]
+      this.getUsuario();
+    })
   }
   
   deleteUsuario(usuario: IUsuario){
     const modalRef = this.modalService.open(DeleteUsuariosModalComponent);
     modalRef.componentInstance.usuario = usuario;
+    modalRef.dismissed.subscribe(()=>{
+      this.usuarios=[]
+      this.getUsuario();
+    })
   }
 
 }

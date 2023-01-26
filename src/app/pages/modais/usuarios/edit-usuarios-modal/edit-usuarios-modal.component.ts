@@ -24,8 +24,7 @@ export class EditUsuariosModalComponent {
   edit(){
     this.request.updateUsuario(this.usuarioForm.value)
     .pipe(take(1))
-    .subscribe()
-    this.activeModal.dismiss(()=>
+    .subscribe(()=>
     this.activeModal.dismiss());
   }
 }
