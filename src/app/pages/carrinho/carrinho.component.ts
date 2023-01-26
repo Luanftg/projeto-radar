@@ -12,6 +12,7 @@ import { ICliente } from 'src/app/shared/models/cliente.interface';
 import { IClientePost } from 'src/app/shared/models/clientePost.interface';
 import { IEndereco } from 'src/app/shared/models/endereco.interface';
 import { EnderecoRequestService } from 'src/app/shared/request/endereco.service';
+import { Prateleira } from 'src/app/services/Prateleira';
 
 @Component({
   selector: 'app-carrinho',
@@ -72,15 +73,31 @@ getClientes(){
       clientesPost.forEach(cliente=>{
         this.clientes.push({...enderecos[hashFindEnd.get(cliente.enderecoId||0)||0],...cliente})
       })
+      this.clienteId=1
     })
   })
 }
 delete(index:number){
-
+  Carrinho.excluirProduto(index);
 }
+editar = false;
+clienteId = 0;
+nomeCliente=""
 ngOnInit(): void {
   this.iniciar();
-  this.getClientes();
+  console.log(Carrinho.getCliente_Id());
+  if(Carrinho.getCliente_Id()>0){
+    this.editar = true
+    this.requestc.getCliente().pipe(take(1)).subscribe(res=>{
+      (<IClientePost[]>res).forEach(cliente=>{
+        if(cliente.id==Carrinho.getCliente_Id()){
+          this.nomeCliente=cliente.nome;
+        }
+        this.calcularValorTotal()
+      })})
+  }else{
+    this.getClientes();
+  }
 }
 calcularValorTotal() {
   this.valor_total=Carrinho.getValor_Total();
@@ -110,7 +127,9 @@ Subtrair(i:number){
     }
   }
   comprar(){
-    Carrinho.setCliente_Id(Number(this.clienteSelecionado))
+    if(!this.editar){
+      Carrinho.setCliente_Id(Number(this.clienteSelecionado))
+    }
     Carrinho.salvar(this.http);
   }
 }

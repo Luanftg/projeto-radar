@@ -20,7 +20,7 @@ export class ClientesRequestService {
     private auth:AuthService,  ) { }
 
   getCliente(){
-    return this.http.get(environment.url + 'clientes',{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
+    return this.http.get<IClientePost[]>(environment.url + 'clientes',{ headers: new HttpHeaders({authorization: `${this.auth.getToken()}`})})
 
   }
   postCliente(cliente:ICliente, modal:NgbActiveModal){

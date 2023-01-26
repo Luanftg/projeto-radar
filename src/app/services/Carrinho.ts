@@ -23,6 +23,10 @@ export class Carrinho{
         Carrinho.pedido.clienteId=id;
     }
 
+    public static getCliente_Id():number{
+        return Carrinho.pedido.clienteId;
+    }
+
     public static listar():(IPedidoProduto)[]{
         return Carrinho.carrinho;
     }
@@ -72,6 +76,7 @@ export class Carrinho{
         let request = new PedidosRequestService(http, new AuthService());
         let pedidoProdutoRequest=new PedidosProdutosRequestService(http, new AuthService());
         if(Carrinho.pedido.id){
+            console.log(Carrinho.pedido)
             request.updatePedido(Carrinho.pedido).subscribe();
             Carrinho.carrinho.forEach(pedidoProduto=>{
                 if(pedidoProduto.id>0){

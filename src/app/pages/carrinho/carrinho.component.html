@@ -11,11 +11,12 @@
         <div class="header">
           
           <span>Carrinho</span>
-
-          <select id ="id" class="form-select select text-center" [(ngModel)]="clienteSelecionado">
+          <input readonly *ngIf="editar" [value]="nomeCliente">
+          <select *ngIf="!editar" id ="id" class="form-select select text-center" [(ngModel)]="clienteSelecionado">
             <option *ngFor="let cliente of clientes; index as i"  value="{{cliente.id}}"  aria-placeholder="Selecione o Cliente:">{{cliente.nome}}</option>
           </select>
-          <button type="submit" (click)="comprar()" id="new">Comprar</button>
+          <button *ngIf="!editar" type="submit" (click)="comprar()" id="new">Comprar</button>
+          <button *ngIf="editar" type="submit" (click)="comprar()" id="new">Editar</button>
         </div>
 
         <div class="divTable ">
@@ -25,23 +26,31 @@
                 <th>Produto</th>
                 <th>Valor</th>
                 <th>Quantidade</th>
+                <th>Ações</th>
                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let pedidoProduto of getCarrinho();index as i">
                 <td>{{this.getProduto(pedidoProduto.produtoId).nome}}</td>
-                <td>{{pedidoProduto.valor}}</td>
+                <td>{{pedidoProduto.valor | currency}}</td>
                 <td><button id="retirar" type="button" class="qtdEstoque subtraiEstoque" style="margin-left: 10px;"
                     (click)="Subtrair(i)">-</button>
                   {{pedidoProduto.quantidade}}
                   <button id="adicionar" type="button" class="qtdEstoque somaEstoque" style="margin-right: 10px;"
                     (click)="Adicionar(i)">+</button>
                 </td>
-                <td>{{pedidoProduto.valor*pedidoProduto.quantidade}}</td>
                 <td class="acao">
-                  <button><i class='bx bx-trash' (click)="delete(i)"></i></button>
+                  <button><i class='bx bx-trash' (click)="Excluir(i)"></i></button>
                 </td>
+                <td>{{pedidoProduto.valor*pedidoProduto.quantidade | currency}}</td>
+              </tr>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Total:{{valor_total | currency}}</th>
               </tr>
             </tbody>
           </table>

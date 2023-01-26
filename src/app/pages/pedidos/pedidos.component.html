@@ -14,7 +14,7 @@
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
+                <th style="width:30%">Nome</th>
                 <th>CPF</th>
                 <th>Valor Total</th>
                 <th>Data da Compra</th>
@@ -22,13 +22,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let pedido of pedidos">
+              <tr *ngFor="let pedido of pedidos | filter: termoBuscar">
                 <td>{{this.getClienteById(pedido.clienteId).nome}}</td>
                 <td>{{this.getClienteById(pedido.clienteId).cpf | cpf}}</td>
                 <td>{{pedido.valorTotal | currency}}</td>
                 <td>{{pedido.dtCriacao | date: 'dd/MM/yyyy'}}</td>
                 <td class="acao">
-                  <button><i class='bx bx-edit' routerLink="/carrinho" (click)="editPedido(pedido)"></i></button>
+                  <button><i class='bx bx-edit' (click)="editPedido(pedido)"></i></button>
                   <button><i class='bx bx-trash' (click)="deletePedido(pedido)"></i></button>
                 </td>
               </tr>
