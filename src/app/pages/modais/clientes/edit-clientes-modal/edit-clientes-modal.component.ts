@@ -36,19 +36,16 @@ export class EditClientesModalComponent {
     if(mes==""){
     this.clienteRequest.updateCliente(cliente)
     .pipe(take(1))
-    .subscribe()
+    .subscribe(()=>{
     let endereco = {
       ...this.clienteForm.value,
       id: this.enderecoId,
     } as IEndereco;
     this.endRequest.updateEndereco(endereco)
     .pipe(take(1))
-    .subscribe()
-    this.activeModal.dismiss();
-    setTimeout(function () {
-      window.location.replace("clientes"); //will redirect to your blog page (an ex: blog.html)
-   }, 500);}
-   else {
+    .subscribe(()=>
+    this.activeModal.dismiss());})
+  }else {
     alert(mes)
    }
   }
