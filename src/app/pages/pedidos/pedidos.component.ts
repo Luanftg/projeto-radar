@@ -73,6 +73,11 @@ export class PedidosComponent implements OnInit {
   deletePedido(pedido: IPedido){
     const modalRef = this.modalService.open(DeletePedidosModalComponent);
     modalRef.componentInstance.pedido = pedido;
+    modalRef.dismissed.subscribe(
+      ()=>{
+        this.carregarPedidos()
+      }
+    )
   }
   viewPedido(pedido:IPedido){
     const modalRef = this.modalService.open(DeleteProdutosModalComponent);
