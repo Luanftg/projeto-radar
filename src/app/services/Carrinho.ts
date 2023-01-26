@@ -108,11 +108,19 @@ export class Carrinho{
                 request.getPedido()
                 .subscribe( res => {pedido = <IPedido[]>res
                     let pedidoLast=pedido.pop();
+                    let n = Carrinho.carrinho.length
+                    let total=0;
                     Carrinho.carrinho.forEach(pedidoProduto => {
                         pedidoProduto.pedidoId=pedidoLast ? pedidoLast.id : 0;
-                        pedidoProdutoRequest.postPedidoProduto(pedidoProduto).pipe(take(1)).subscribe();
+                        pedidoProdutoRequest.postPedidoProduto(pedidoProduto).pipe(take(1)).subscribe(
+                            ()=>{
+                                total+=1
+                                if(total==n){
+                                    Carrinho.reset();
+                                }
+                            }
+                        );
                     });
-                    Carrinho.reset();
                 });});
         }
     }
