@@ -5,11 +5,14 @@ import { IPedido } from "../shared/models/pedido.interface";
 import { IProduto } from "../shared/models/produto.interface";
 import { PedidosProdutosRequestService } from "../shared/request/pedidosprodutos.service";
 import { AuthService } from "../shared/auth/auth.service";
+import { Router } from "@angular/router";
+import { take } from "rxjs";
 
 export class Carrinho{
     static setCarrinho(pedido: IPedido, pedidosProdutos: IPedidoProduto[]) {
       Carrinho.carrinho=pedidosProdutos;
       Carrinho.pedido=pedido;
+      console.log(pedidosProdutos)
     }
 
     private static carrinho: (IPedidoProduto)[]=[];
@@ -21,6 +24,10 @@ export class Carrinho{
 
     public static setCliente_Id(id:number):void{
         Carrinho.pedido.clienteId=id;
+    }
+
+    public static getCliente_Id():number{
+        return Carrinho.pedido.clienteId;
     }
 
     public static listar():(IPedidoProduto)[]{
@@ -56,7 +63,14 @@ export class Carrinho{
         return -1
     }
 
-    public static excluirProduto(id:number):void{
+    public static excluirProduto(http:HttpClient,id:number):void{
+        if(Carrinho.getCliente_Id()===0){
+            Carrinho.carrinho.splice(id,1);
+            return
+        }
+        console.log(Carrinho.carrinho[id].id)
+        let pedidoProdutoRequest=new PedidosProdutosRequestService(http, new AuthService());
+        pedidoProdutoRequest.deletePedidoProduto(Carrinho.carrinho[id].id).pipe(take(1)).subscribe();
         Carrinho.carrinho.splice(id,1);
         }
 
@@ -68,17 +82,19 @@ export class Carrinho{
         return Carrinho.pedido.valorTotal=total;
     }
 
-    public static async salvar(http:HttpClient):Promise<void>{
+    public static async salvar(http:HttpClient, router:Router):Promise<void>{
         let request = new PedidosRequestService(http, new AuthService());
         let pedidoProdutoRequest=new PedidosProdutosRequestService(http, new AuthService());
         if(Carrinho.pedido.id){
-            request.updatePedido(Carrinho.pedido).subscribe();
+            console.log(Carrinho.pedido)
+            request.updatePedido(Carrinho.pedido).pipe(take(1)).subscribe(()=>
+            router.navigate(['pedidos']));
             Carrinho.carrinho.forEach(pedidoProduto=>{
                 if(pedidoProduto.id>0){
-                    pedidoProdutoRequest.updatePedidoProduto(pedidoProduto).subscribe();
+                    pedidoProdutoRequest.updatePedidoProduto(pedidoProduto).pipe(take(1)).subscribe();
                 }else{
                     pedidoProduto.pedidoId=Carrinho.pedido.id;
-                    pedidoProdutoRequest.postPedidoProduto(pedidoProduto).subscribe();
+                    pedidoProdutoRequest.postPedidoProduto(pedidoProduto).pipe(take(1)).subscribe();
                 }
             })
             Carrinho.reset();
@@ -87,13 +103,14 @@ export class Carrinho{
             pedidoPost.dtCriacao=new Date((new Date()).getTime());
             pedidoPost.valorTotal=Carrinho.getValor_Total();
             pedidoPost.clienteId=Carrinho.pedido.clienteId;
-            request.postPedido(pedidoPost).subscribe(()=>{let pedido = [] as IPedido[];
+            request.postPedido(pedidoPost).pipe(take(1)).subscribe(()=>{let pedido = [] as IPedido[];
+                router.navigate(['pedidos']);
                 request.getPedido()
                 .subscribe( res => {pedido = <IPedido[]>res
                     let pedidoLast=pedido.pop();
                     Carrinho.carrinho.forEach(pedidoProduto => {
                         pedidoProduto.pedidoId=pedidoLast ? pedidoLast.id : 0;
-                        pedidoProdutoRequest.postPedidoProduto(pedidoProduto).subscribe();
+                        pedidoProdutoRequest.postPedidoProduto(pedidoProduto).pipe(take(1)).subscribe();
                     });
                     Carrinho.reset();
                 });});

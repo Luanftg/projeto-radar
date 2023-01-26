@@ -11,6 +11,7 @@ import { Carrinho } from 'src/app/services/Carrinho';
 import { ICliente } from 'src/app/shared/models/cliente.interface';
 import { ClientesRequestService } from 'src/app/shared/request/clientes.service';
 import { DeletePedidosModalComponent } from '../modais/pedidos/delete-pedidos-modal/delete-pedidos-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pedidos',
@@ -24,6 +25,7 @@ export class PedidosComponent implements OnInit {
     private pedidosProdutosRequest: PedidosProdutosRequestService,
     private clientesRequest: ClientesRequestService,
     public auth: AuthService,
+    private router:Router,
     private modalService: NgbModal,) {
     
   }
@@ -83,6 +85,7 @@ export class PedidosComponent implements OnInit {
       .subscribe(list => {
         let pedidosProdutos = <IPedidoProduto[]>list;
         Carrinho.setCarrinho(pedido,pedidosProdutos.filter(value=>value.pedidoId===pedido.id))
+        this.router.navigateByUrl('carrinho')
       })
   }
 }

@@ -24,7 +24,7 @@
                 </tr>
               </thead>
                <tbody>
-              <tr *ngFor="let campanha of campanhas">
+              <tr *ngFor="let campanha of campanhas | filter: termoBuscar">
                 <td>{{campanha.nome}}</td>
                 <td>{{campanha.descricao}}</td>
                 <td>{{campanha.dtCriacao | date: 'dd/MM/yyyy'}}</td>

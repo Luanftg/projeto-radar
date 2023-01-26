@@ -119,11 +119,13 @@ export class FluxoCaixaComponent implements OnInit {
     this.comparaMes()
     let receitaDia = 0
     for (let i = 0; i < this.objetoApi.length; i++) {
-      this.objetoApi[i].dtCriacao.getDay()
+      let data = new Date(this.objetoApi[i].dtCriacao);
       let dataAtual = 
-      this.objetoApi[i].dtCriacao.getFullYear().toString()+"-"+
-      (this.objetoApi[i].dtCriacao.getMonth()+1).toString() + "-"+
-      this.objetoApi[i].dtCriacao.getDay().toString()
+      data.getFullYear().toString()+"-"+
+      this.mesCorreto(data.getMonth()) + "-"+
+      data.getDate().toString()
+      console.log(this.dateSelected)
+      console.log(dataAtual)
       if(this.dateSelected==dataAtual){
         receitaDia += this.objetoApi[i].valorTotal
         this.valorDiario = receitaDia
@@ -132,9 +134,14 @@ export class FluxoCaixaComponent implements OnInit {
     if(receitaDia == 0){
       this.valorDiario = 0
     }
-
   }
-
+  mesCorreto(mes:number):string{
+    mes++
+    if(mes<10){
+      return "0"+mes;
+    }
+    return mes.toString()
+  }
   comparaMes() {
       let mes = Number(this.dateSelected.toString().slice(5, -3));
       this.valorMes = this.fluxo[mes-1]
